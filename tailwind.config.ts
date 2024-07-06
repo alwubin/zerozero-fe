@@ -19,6 +19,11 @@ const config: Config = {
         'laptop': '1024px',
         'desktop': '1280px',
       },
+      colors: {
+        'main': '#CD5C5C',
+        'nav': '#FDFDFD',
+        'point': '#F2F4F6'
+      }
     },
   },
   plugins: [],
