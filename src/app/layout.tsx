@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-[#212121]">
       <body
         className={`${noto.className} h-screen mobile:mx-auto mobile:max-w-[480px]`}
       >

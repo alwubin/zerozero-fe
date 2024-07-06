@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white">
-      <div className="w-1/6">
+      <div className="">
         <Image
           src="/images/iconLogo.png"
           alt="icon-logo"
@@ -12,7 +12,7 @@ export default function Home() {
           height={120}
         />
       </div>
-      <div className="w-1/6">
+      <div className="w-2/6 mt-9">
         <Image
           src="/images/nameLogo.png"
           alt="name-logo"
