@@ -1,7 +1,14 @@
+"use client";
 import Image from "next/image";
 import AnimatedLogo from "./(route)/_components/AnimatedLogo";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleLogin = () => {
+    router.push("/login");
+  };
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <AnimatedLogo />
@@ -11,7 +18,10 @@ export default function Home() {
         </button>
         <div className="flex justify-center mt-14 mb-14 text-[#A5A5A5] font-bold">
           이미 계정이 있나요?{" "}
-          <button className="text-main ml-2 font-bold hover:cursor">
+          <button
+            className="text-main ml-2 font-bold hover:cursor"
+            onClick={handleLogin}
+          >
             로그인
           </button>
         </div>
