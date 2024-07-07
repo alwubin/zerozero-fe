@@ -1,6 +1,5 @@
 "use client";
-import Image from "next/image";
-import AnimatedLogo from "./(route)/_components/AnimatedLogo";
+import AnimatedLogo from "./_components/home/AnimatedLogo";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
