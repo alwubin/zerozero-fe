@@ -23,7 +23,10 @@ const config: Config = {
         'main': '#CD5C5C',
         'nav': '#FDFDFD',
         'point': '#F2F4F6'
-      }
+      },
+      fontFamily: {
+        'archivo-black': ['var(--font-archivo-black)'],
+      },
     },
   },
   plugins: [],
