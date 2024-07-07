@@ -19,18 +19,17 @@ export default function AnimatedLogo() {
         🥤
       </motion.div>
       <motion.div
-        className="w-2/5 mt-9"
+        className="mt-9 font-archivo-black text-main text-7xl leading-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.5 }}
       >
-        <Image
-          src="/images/nameLogo.png"
-          alt="name-logo"
-          className="max-w-full h-auto"
-          width={412}
-          height={268}
-        />
+        <div className="relative">
+          <div className="text-7xl">zero</div>
+          <div className="text-7xl absolute top-full left-0 -mt-[0.35em]">
+            zero
+          </div>
+        </div>
       </motion.div>
     </motion.div>
   );
