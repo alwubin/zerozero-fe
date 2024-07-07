@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR } from "next/font/google";
+import { Noto_Sans_KR, Archivo_Black } from "next/font/google";
 import "./globals.css";
 
 const noto = Noto_Sans_KR({
   subsets: ["latin"], // 또는 preload: false
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
+
+const archivoBlack = Archivo_Black({
+  weight: ["400"],
+  subsets: ["latin"],
+  variable: "--font-archivo-black",
 });
 
 export const metadata: Metadata = {
@@ -18,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-[#212121]">
+    <html lang="en" className={`bg-[#212121] ${archivoBlack.variable}`}>
       <body
         className={`${noto.className} h-screen mobile:mx-auto mobile:max-w-[480px]`}
       >
