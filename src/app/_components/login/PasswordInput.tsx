@@ -1,14 +1,18 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
 
-function PasswordInput() {
+interface PasswordProps {
+  label: string;
+}
+
+function PasswordInput({ label }: PasswordProps) {
   const [password, setPassword] = useState<string>("");
 
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
   return (
     <div className="ml-9 mt-12 w-full">
-      <div className="text-[#A5A5A5] font-light text-sm">비밀번호</div>
+      <div className="text-[#A5A5A5] font-light text-sm">{label}</div>
       <div className="flex items-center">
         <input
           type="password"

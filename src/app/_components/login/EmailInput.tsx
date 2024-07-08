@@ -1,7 +1,11 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
 
-function EmailInput() {
+interface EmailInputProps {
+  className?: string;
+}
+
+function EmailInput({ className = "ml-9 mt-32 w-full" }: EmailInputProps) {
   const [emailId, setEmailId] = useState<string>("");
   const [domain, setDomain] = useState<string>("naver.com");
   const [customDomain, setCustomDomain] = useState<string>("");
@@ -25,7 +29,7 @@ function EmailInput() {
     setCustomDomain(e.target.value);
 
   return (
-    <div className="ml-9 mt-32 w-full">
+    <div className={className}>
       <div className="text-[#A5A5A5] font-light text-sm">이메일</div>
       <div className="flex items-center">
         <input
