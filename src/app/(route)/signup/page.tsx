@@ -1,3 +1,5 @@
+"use client";
+import { useSignupStore } from "@/app/store/signupStore";
 import BackButton from "@/app/_components/common/BackButton";
 import HeaderMessage from "@/app/_components/common/HeaderMessage";
 import NicknameInput from "@/app/_components/login/NicknameInput";
@@ -6,14 +8,33 @@ import PasswordInput from "@/app/_components/login/PasswordInput";
 import ConfirmButton from "@/app/_components/common/ConfirmButton";
 
 export default function Signup() {
+  const step = useSignupStore((state) => state.step);
+
+  const getHeaderMessage = () => {
+    switch (step) {
+      case 1:
+        return "닉네임을 알려주세요";
+      case 2:
+        return "이메일을 입력해주세요";
+      case 3:
+        return "비밀번호를 입력해주세요";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <BackButton />
-      <HeaderMessage message="닉네임을 입력해주세요" />
-      <NicknameInput />
-      <EmailInput className="ml-9 mt-12 w-full" />
-      <PasswordInput label="비밀번호" />
-      <PasswordInput label="비밀번호 확인" />
+      <HeaderMessage message={getHeaderMessage()} />
+      {step >= 1 && <NicknameInput />}
+      {step >= 2 && <EmailInput className="ml-9 mt-12 w-full" />}
+      {step >= 3 && (
+        <>
+          <PasswordInput label="비밀번호" isConfirm={false} />
+          <PasswordInput label="비밀번호 확인" isConfirm={true} />
+        </>
+      )}
       <ConfirmButton />
     </div>
   );

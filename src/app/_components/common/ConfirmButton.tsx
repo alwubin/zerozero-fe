@@ -1,8 +1,15 @@
 "use client";
+import { useSignupStore } from "@/app/store/signupStore";
 
 function ConfirmButton() {
-  const handleClick = () => {
-    alert("확인");
+  const { step, setStep } = useSignupStore();
+
+  const handleConfirm = () => {
+    if (step < 3) {
+      setStep(step + 1);
+    } else {
+      alert("회원가입 완료");
+    }
   };
 
   return (
@@ -11,7 +18,7 @@ function ConfirmButton() {
       <div className="w-full">
         <button
           className="bg-main w-full text-white h-16"
-          onClick={handleClick}
+          onClick={handleConfirm}
         >
           확인
         </button>

@@ -1,21 +1,27 @@
 import { create } from 'zustand'
 
-type SignupState = {
-    currentStep: number;
+interface SignupState {
+    step: number;
     nickname: string;
     email: string;
     password: string;
-    confirmPassword: string;
-    nextStep: () => void;
-    setField: (field: string, value: string) => void;
+    confirmPassword: string,
+    setStep: (step: number) => void;
+    setNickname: (nickname: string) => void;
+    setEmail: (email: string) => void;
+    setPassword: (password: string) => void;
+    setConfirmPassword: (confirmPassword: string) => void;
 }
-  
+
 export const useSignupStore = create<SignupState>((set) => ({
-    currentStep: 0,
+    step: 1,
     nickname: '',
     email: '',
     password: '',
     confirmPassword: '',
-    nextStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),
-    setField: (field, value) => set((state) => ({ [field]: value })),
-}))
+    setStep: (step) => set({step}),
+    setNickname: (nickname) => set({nickname}),
+    setEmail: (email) => set({email}),
+    setPassword: (password) => set({password}),
+    setConfirmPassword: (confirmPassword) => set({confirmPassword}),
+}));

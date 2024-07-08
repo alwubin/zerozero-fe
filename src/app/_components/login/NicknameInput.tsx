@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
+import { useSignupStore } from "@/app/store/signupStore";
 
 function NicknameInput() {
-  const [nickname, setNickname] = useState<string>("");
+  const { nickname, setNickname } = useSignupStore();
 
   const handleNickname = (e: ChangeEvent<HTMLInputElement>) =>
     setNickname(e.target.value);

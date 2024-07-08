@@ -1,32 +1,39 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
+import { useSignupStore } from "@/app/store/signupStore";
 
 interface EmailInputProps {
   className?: string;
 }
 
 function EmailInput({ className = "ml-9 mt-32 w-full" }: EmailInputProps) {
-  const [emailId, setEmailId] = useState<string>("");
-  const [domain, setDomain] = useState<string>("naver.com");
-  const [customDomain, setCustomDomain] = useState<string>("");
-  const [isCustomDomain, setIsCustomDomain] = useState<boolean>(false);
+  const { email, setEmail } = useSignupStore();
+  const [emailId, domain] = email.split("@");
+  const [isCustomDomain, setIsCustomDomain] = React.useState<boolean>(() => {
+    if (domain) {
+      return !["naver.com", "gmail.com", "daum.net"].includes(domain);
+    }
+    return false;
+  });
 
-  const handleEmailIdChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setEmailId(e.target.value);
+  const handleEmailIdChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(`${e.target.value}@${domain}`);
+  };
 
   const handleDomainChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedDomain = e.target.value;
     if (selectedDomain === "custom") {
       setIsCustomDomain(true);
-      setDomain("");
+      setEmail(`${emailId}@`);
     } else {
       setIsCustomDomain(false);
-      setDomain(selectedDomain);
+      setEmail(`${emailId}@${selectedDomain}`);
     }
   };
 
-  const handleCustomDomainChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setCustomDomain(e.target.value);
+  const handleCustomDomainChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(`${emailId}@${e.target.value}`);
+  };
 
   return (
     <div className={className}>
@@ -43,7 +50,7 @@ function EmailInput({ className = "ml-9 mt-32 w-full" }: EmailInputProps) {
         {isCustomDomain ? (
           <input
             type="text"
-            value={customDomain}
+            value={domain}
             onChange={handleCustomDomainChange}
             className="w-2/5 p-2 border-b-2 border-[#A5A5A5] border-x-0 border-t-0 outline-none focus-within:border-main transition duration-300 placeholder:font-light placeholder:text-sm"
             placeholder="직접 입력"
