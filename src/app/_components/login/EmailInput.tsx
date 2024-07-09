@@ -1,48 +1,58 @@
 "use client";
-import React, { ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
+import { motion } from "framer-motion";
 
 interface EmailInputProps {
   className?: string;
-  email: string;
   setEmail: (email: string) => void;
+  onShake: boolean;
 }
 
 function EmailInput({
   className = "ml-9 mt-32 w-full",
-  email,
   setEmail,
+  onShake,
 }: EmailInputProps) {
-  const [emailId, domain] = email.split("@");
-  const [isCustomDomain, setIsCustomDomain] = React.useState<boolean>(() => {
-    if (domain) {
-      return !["naver.com", "gmail.com", "daum.net"].includes(domain);
-    }
-    return false;
-  });
+  const [emailId, setEmailId] = useState("");
+  const [domain, setDomain] = useState("naver.com");
+  const [isCustomDomain, setIsCustomDomain] = useState(false);
+
+  React.useEffect(() => {
+    setEmail(`${emailId}@${domain}`);
+  }, [emailId, domain, setEmail]);
 
   const handleEmailIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(`${e.target.value}@${domain || ""}`);
+    setEmailId(e.target.value);
   };
 
   const handleDomainChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedDomain = e.target.value;
     if (selectedDomain === "custom") {
       setIsCustomDomain(true);
-      setEmail(`${emailId}@`);
+      setDomain("");
     } else {
       setIsCustomDomain(false);
-      setEmail(`${emailId}@${selectedDomain}`);
+      setDomain(selectedDomain);
     }
   };
 
   const handleCustomDomainChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(`${emailId}@${e.target.value}`);
+    setDomain(e.target.value);
   };
 
   return (
-    <div className={className}>
+    <motion.div
+      className={className}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.3, duration: 0.5 }}
+    >
       <div className="text-[#A5A5A5] font-light text-sm">이메일</div>
-      <div className="flex items-center">
+      <motion.div
+        className="flex items-center"
+        animate={onShake ? { x: [-10, 10, -10, 10, 0] } : {}}
+        transition={{ duration: 0.5 }}
+      >
         <input
           type="text"
           value={emailId}
@@ -71,8 +81,8 @@ function EmailInput({
             <option value="custom">직접 입력</option>
           </select>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
