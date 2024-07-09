@@ -1,17 +1,8 @@
-"use client";
-import { useSignupStore } from "@/app/store/signupStore";
+interface ConfirmButtonProps {
+  handleConfirm: () => void;
+}
 
-function ConfirmButton() {
-  const { step, setStep } = useSignupStore();
-
-  const handleConfirm = () => {
-    if (step < 3) {
-      setStep(step + 1);
-    } else {
-      alert("회원가입 완료");
-    }
-  };
-
+function ConfirmButton({ handleConfirm }: ConfirmButtonProps) {
   return (
     <>
       <div className="flex-grow"></div>
