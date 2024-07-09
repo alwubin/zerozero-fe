@@ -1,14 +1,29 @@
 "use client";
 import React, { useState, ChangeEvent } from "react";
+import { motion } from "framer-motion";
 
-function EmailInput() {
-  const [emailId, setEmailId] = useState<string>("");
-  const [domain, setDomain] = useState<string>("naver.com");
-  const [customDomain, setCustomDomain] = useState<string>("");
-  const [isCustomDomain, setIsCustomDomain] = useState<boolean>(false);
+interface EmailInputProps {
+  className?: string;
+  setEmail: (email: string) => void;
+  onShake: boolean;
+}
 
-  const handleEmailIdChange = (e: ChangeEvent<HTMLInputElement>) =>
+function EmailInput({
+  className = "ml-9 mt-32 w-full",
+  setEmail,
+  onShake,
+}: EmailInputProps) {
+  const [emailId, setEmailId] = useState("");
+  const [domain, setDomain] = useState("naver.com");
+  const [isCustomDomain, setIsCustomDomain] = useState(false);
+
+  React.useEffect(() => {
+    setEmail(`${emailId}@${domain}`);
+  }, [emailId, domain, setEmail]);
+
+  const handleEmailIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailId(e.target.value);
+  };
 
   const handleDomainChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedDomain = e.target.value;
@@ -21,13 +36,23 @@ function EmailInput() {
     }
   };
 
-  const handleCustomDomainChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setCustomDomain(e.target.value);
+  const handleCustomDomainChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setDomain(e.target.value);
+  };
 
   return (
-    <div className="ml-9 mt-32 w-full">
+    <motion.div
+      className={className}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.3, duration: 0.5 }}
+    >
       <div className="text-[#A5A5A5] font-light text-sm">이메일</div>
-      <div className="flex items-center">
+      <motion.div
+        className="flex items-center"
+        animate={onShake ? { x: [-10, 10, -10, 10, 0] } : {}}
+        transition={{ duration: 0.5 }}
+      >
         <input
           type="text"
           value={emailId}
@@ -39,7 +64,7 @@ function EmailInput() {
         {isCustomDomain ? (
           <input
             type="text"
-            value={customDomain}
+            value={domain}
             onChange={handleCustomDomainChange}
             className="w-2/5 p-2 border-b-2 border-[#A5A5A5] border-x-0 border-t-0 outline-none focus-within:border-main transition duration-300 placeholder:font-light placeholder:text-sm"
             placeholder="직접 입력"
@@ -56,8 +81,8 @@ function EmailInput() {
             <option value="custom">직접 입력</option>
           </select>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

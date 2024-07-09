@@ -1,38 +1,27 @@
 "use client";
-import Image from "next/image";
+import { useLoginStore } from "@/app/store/loginStore";
 import EmailInput from "../../_components/login/EmailInput";
 import PasswordInput from "../../_components/login/PasswordInput";
-import { useRouter } from "next/navigation";
+import BackButton from "@/app/_components/common/BackButton";
+import ConfrimButton from "@/app/_components/common/ConfirmButton";
+import HeaderMessage from "@/app/_components/common/HeaderMessage";
+import { useEffect } from "react";
 
 export default function Login() {
-  const router = useRouter();
+  const { email, password, setEmail, setPassword, resetState } =
+    useLoginStore();
 
-  const handleBackButton = () => {
-    router.push("/");
-  };
+  useEffect(() => {
+    resetState();
+  }, [resetState]);
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <div
-        className="justify-start ml-9 mt-9 cursor-pointer"
-        onClick={handleBackButton}
-      >
-        <Image
-          src="/images/back-button.png"
-          alt="back-button"
-          width={24}
-          height={24}
-        />
-      </div>
-      <div className="font-bold text-2xl ml-9 mt-14">
-        이메일과 비밀번호로 로그인해주세요
-      </div>
-      <EmailInput />
-      <PasswordInput />
-      <div className="flex-grow"></div>
-      <div className="w-full">
-        <button className="bg-main w-full text-white h-16">확인</button>
-      </div>
+      <BackButton />
+      <HeaderMessage message="이메일과 비밀번호로 로그인해주세요" />
+      <EmailInput email={email} setEmail={setEmail} />
+      <PasswordInput label="비밀번호" value={password} onChange={setPassword} />
+      <ConfrimButton />
     </div>
   );
 }

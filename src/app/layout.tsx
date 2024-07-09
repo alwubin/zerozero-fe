@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR, Archivo_Black } from "next/font/google";
+import localFont from "next/font/local";
+import { Archivo_Black } from "next/font/google";
 import "./globals.css";
 
-const noto = Noto_Sans_KR({
-  subsets: ["latin"], // 또는 preload: false
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+const pretendard = localFont({
+  src: "./fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+  variable: "--font-pretendard",
 });
 
 const archivoBlack = Archivo_Black({
@@ -26,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`bg-[#212121] ${archivoBlack.variable}`}>
       <body
-        className={`${noto.className} h-screen mobile:mx-auto mobile:max-w-[480px]`}
+        className={`${pretendard.className} h-screen mobile:mx-auto mobile:max-w-[480px]`}
       >
         {children}
       </body>
