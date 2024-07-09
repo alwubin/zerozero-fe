@@ -1,13 +1,17 @@
 "use client";
-import React, { useState, ChangeEvent } from "react";
-import { useSignupStore } from "@/app/store/signupStore";
+import React, { ChangeEvent } from "react";
 
 interface EmailInputProps {
   className?: string;
+  email: string;
+  setEmail: (email: string) => void;
 }
 
-function EmailInput({ className = "ml-9 mt-32 w-full" }: EmailInputProps) {
-  const { email, setEmail } = useSignupStore();
+function EmailInput({
+  className = "ml-9 mt-32 w-full",
+  email,
+  setEmail,
+}: EmailInputProps) {
   const [emailId, domain] = email.split("@");
   const [isCustomDomain, setIsCustomDomain] = React.useState<boolean>(() => {
     if (domain) {
@@ -17,7 +21,7 @@ function EmailInput({ className = "ml-9 mt-32 w-full" }: EmailInputProps) {
   });
 
   const handleEmailIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(`${e.target.value}@${domain}`);
+    setEmail(`${e.target.value}@${domain || ""}`);
   };
 
   const handleDomainChange = (e: ChangeEvent<HTMLSelectElement>) => {

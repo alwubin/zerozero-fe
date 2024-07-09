@@ -11,6 +11,7 @@ interface SignupState {
     setEmail: (email: string) => void;
     setPassword: (password: string) => void;
     setConfirmPassword: (confirmPassword: string) => void;
+    resetState: () => void;
 }
 
 export const useSignupStore = create<SignupState>((set) => ({
@@ -24,4 +25,11 @@ export const useSignupStore = create<SignupState>((set) => ({
     setEmail: (email) => set({email}),
     setPassword: (password) => set({password}),
     setConfirmPassword: (confirmPassword) => set({confirmPassword}),
+    resetState: () => set({
+        step: 1,
+        nickname: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+    })
 }));
