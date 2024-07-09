@@ -1,5 +1,6 @@
 "use client";
 import { useSignupStore } from "@/app/store/signupStore";
+import { motion } from "framer-motion";
 import BackButton from "@/app/_components/common/BackButton";
 import HeaderMessage from "@/app/_components/common/HeaderMessage";
 import NicknameInput from "@/app/_components/login/NicknameInput";
@@ -27,13 +28,33 @@ export default function Signup() {
     <div className="flex min-h-screen flex-col bg-white">
       <BackButton />
       <HeaderMessage message={getHeaderMessage()} />
-      {step >= 1 && <NicknameInput />}
-      {step >= 2 && <EmailInput className="ml-9 mt-12 w-full" />}
+      {step >= 1 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          <NicknameInput />
+        </motion.div>
+      )}
+      {step >= 2 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          <EmailInput className="ml-9 mt-12 w-full" />
+        </motion.div>
+      )}
       {step >= 3 && (
-        <>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
           <PasswordInput label="비밀번호" isConfirm={false} />
           <PasswordInput label="비밀번호 확인" isConfirm={true} />
-        </>
+        </motion.div>
       )}
       <ConfirmButton />
     </div>
