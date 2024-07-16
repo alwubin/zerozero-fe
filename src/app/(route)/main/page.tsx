@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { Navbar } from "@/app/_components/Navbar";
 import {
   Map,
   MapMarker,
@@ -106,7 +107,7 @@ export default function Main() {
         center={state.center}
         style={{
           width: "100%",
-          height: "100%",
+          height: "calc(100vh - 64px)",
         }}
         level={3}
       >
@@ -132,6 +133,9 @@ export default function Main() {
           />
         ))}
       </Map>
+      <div className="absolute bottom-0 left-0 right-0">
+        <Navbar />
+      </div>
     </div>
   );
 }
