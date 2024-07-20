@@ -133,7 +133,7 @@ export default function Main() {
           />
         ))}
       </Map>
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="mt-auto">
         <Navbar />
       </div>
     </div>
