@@ -43,10 +43,16 @@ export const Navbar = () => {
           className="size-6"
         >
           {isActive ? (
-            <path
-              fill="currentColor"
-              d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2Zm0 5a1 1 0 0 0-.993.883L11 8v4a1 1 0 0 0 1.993.117L13 12V8a1 1 0 0 0-1-1Zm0 8a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"
-            />
+            <>
+              <circle cx="12" cy="12" r="10" fill="black" />
+              <path
+                d="M12 9v6m3-3H9"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </>
           ) : (
             <path
               fill="none"
