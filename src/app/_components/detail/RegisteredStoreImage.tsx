@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 export const RegisteredStoreImage = () => {
   const imageCounts = 4;
@@ -10,8 +11,16 @@ export const RegisteredStoreImage = () => {
         {Array.from({ length: imageCounts }, (_, i) => (
           <div
             key={i}
-            className="w-20 h-20 bg-gray-200 rounded-xl flex items-center justify-center"
-          ></div>
+            className="w-20 h-20 bg-gray-200 rounded-xl flex items-center justify-center overflow-hidden"
+          >
+            <Image
+              src="/images/example-store-image.jpeg"
+              alt="rank-icon"
+              width={80}
+              height={80}
+              objectFit="cover"
+            />
+          </div>
         ))}
       </div>
     </div>
