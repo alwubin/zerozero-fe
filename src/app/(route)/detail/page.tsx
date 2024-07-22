@@ -8,7 +8,7 @@ import { StoreReview } from "@/app/_components/detail/StoreReview";
 import { ReportButton } from "@/app/_components/report/ReportButton";
 
 export default function Detail() {
-  const [isRegistered, setIsRegistered] = useState(true);
+  const [isRegistered, setIsRegistered] = useState(false);
   return (
     <div className="flex min-h-screen flex-col bg-[#F2F4F6]">
       <DetailHeader />
@@ -19,7 +19,7 @@ export default function Detail() {
           <StoreReview />
         </div>
       ) : (
-        <div className="w-10/12 mt-4 ml-10">
+        <div className="w-10/12 mt-3 ml-10 space-y-7">
           <StoreImage />
           <ReportButton />
         </div>
