@@ -19,6 +19,7 @@ export const postLogin = async (values: LoginProps) => {
         }
     } catch (error) {
         console.log('로그인 실패: ', error);
+        alert('로그인 실패')
     }
 };
 
