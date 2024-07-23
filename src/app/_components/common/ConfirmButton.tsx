@@ -1,8 +1,12 @@
 interface ConfirmButtonProps {
+  message?: string;
   handleConfirm: () => void;
 }
 
-function ConfirmButton({ handleConfirm }: ConfirmButtonProps) {
+function ConfirmButton({
+  handleConfirm,
+  message = "확인",
+}: ConfirmButtonProps) {
   return (
     <>
       <div className="flex-grow"></div>
@@ -11,7 +15,7 @@ function ConfirmButton({ handleConfirm }: ConfirmButtonProps) {
           className="bg-main w-full text-white h-16"
           onClick={handleConfirm}
         >
-          확인
+          {message}
         </button>
       </div>
     </>
