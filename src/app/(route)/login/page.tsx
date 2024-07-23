@@ -5,6 +5,7 @@ import PasswordInput from "../../_components/login/PasswordInput";
 import BackButton from "@/app/_components/common/BackButton";
 import ConfrimButton from "@/app/_components/common/ConfirmButton";
 import HeaderMessage from "@/app/_components/common/HeaderMessage";
+import { postLogin } from "@/app/api/login";
 import React, { useEffect, useState } from "react";
 
 export default function Login() {
@@ -18,7 +19,13 @@ export default function Login() {
     resetState();
   }, [resetState]);
 
-  const handleConfirm = () => {};
+  const handleConfirm = async () => {
+    const values = {
+      email: email,
+      password: password,
+    };
+    await postLogin(values);
+  };
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
