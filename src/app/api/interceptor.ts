@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logout } from "./login";
 
 export const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -38,8 +39,7 @@ axiosInstance.interceptors.response.use(
           error.config.headers['Authorization'] = `Bearer ${accessToken}`;
           return axiosInstance(error.config);
         } catch (refreshError) {
-            // 에러시 로그아웃 로직 추가
-            //   handleLogout();
+          logout();
           return Promise.reject(refreshError);
         }
       }
