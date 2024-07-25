@@ -6,6 +6,7 @@ import NicknameInput from "@/app/_components/login/NicknameInput";
 import EmailInput from "@/app/_components/login/EmailInput";
 import PasswordInput from "@/app/_components/login/PasswordInput";
 import ConfirmButton from "@/app/_components/common/ConfirmButton";
+import { checkEmailDuplicate } from "@/app/api/signup";
 import { useEffect, useState } from "react";
 
 export default function Signup() {
@@ -24,6 +25,7 @@ export default function Signup() {
   const [nicknameShake, setNicknameShake] = useState(false);
   const [emailShake, setEmailShake] = useState(false);
   const [passwordShake, setPasswordShake] = useState(false);
+  const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
 
   const getHeaderMessage = () => {
     switch (step) {
@@ -38,7 +40,7 @@ export default function Signup() {
     }
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (step === 1) {
       const regex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{2,10}$/;
       if (!regex.test(useSignupStore.getState().nickname)) {
@@ -49,11 +51,27 @@ export default function Signup() {
       }
     } else if (step === 2) {
       const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-      if (!regex.test(useSignupStore.getState().email)) {
+      const email = useSignupStore.getState().email;
+      if (!regex.test(email)) {
         setEmailShake(true);
         setTimeout(() => setEmailShake(false), 200);
       } else {
-        setStep(step + 1);
+        try {
+          const result = await checkEmailDuplicate(email);
+          if (!result) {
+            setIsEmailDuplicate(true);
+            setEmailShake(true);
+            setTimeout(() => setEmailShake(false), 500);
+          } else {
+            setIsEmailDuplicate(false);
+            setStep(step + 1);
+          }
+        } catch (error) {
+          console.error("이메일 중복 검사 중 오류 발생:", error);
+          setIsEmailDuplicate(true);
+          setEmailShake(true);
+          setTimeout(() => setEmailShake(false), 500);
+        }
       }
     } else {
       const regex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/;
@@ -79,11 +97,18 @@ export default function Signup() {
       <HeaderMessage message={getHeaderMessage()} />
       {step >= 1 && <NicknameInput onShake={nicknameShake} />}
       {step >= 2 && (
-        <EmailInput
-          className="ml-9 mt-12 w-full"
-          setEmail={setEmail}
-          onShake={emailShake}
-        />
+        <>
+          <EmailInput
+            className="ml-9 mt-12 w-full"
+            setEmail={setEmail}
+            onShake={emailShake}
+          />
+          {isEmailDuplicate && (
+            <p className="text-main ml-9 mt-2 text-xs">
+              이미 사용 중인 이메일입니다.
+            </p>
+          )}
+        </>
       )}
       {step >= 3 && (
         <>
