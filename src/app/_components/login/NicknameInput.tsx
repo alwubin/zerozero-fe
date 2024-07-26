@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 import { motion } from "framer-motion";
 import { useSignupStore } from "@/app/store/signupStore";
 
@@ -15,7 +15,7 @@ function NicknameInput({ onShake }: NicknameInputProps) {
 
   return (
     <motion.div
-      className="ml-9 mt-32 w-full"
+      className="ml-9 mt-20 w-full"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.3, duration: 0.5 }}
