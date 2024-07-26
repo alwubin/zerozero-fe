@@ -4,24 +4,32 @@ interface LoginProps {
     email: string;
     password: string;
   }
-
-export const postLogin = async (values: LoginProps) => {
+  
+  interface Token {
+    token: string;
+  }
+  
+  interface LoginResponse {
+    token: {
+      accessToken: Token;
+      refreshToken: Token;
+    };
+  }
+  
+  export const postLogin = async (values: LoginProps): Promise<boolean> => {
     try {
-        const response = await axiosInstance.post('/login', values);
-
-        if (response.status === 200) {
-            const tokens = response.data.token;
-            localStorage.setItem('accessToken', tokens.accessToken.token);
-            localStorage.setItem('refreshToken', tokens.refreshToken.token);
-            return true;
-        } else {
-            return false;
-        }
+      const { data } = await axiosInstance.post<LoginResponse>('/login', values);
+      
+      const { accessToken, refreshToken } = data.token;
+      localStorage.setItem('accessToken', accessToken.token);
+      localStorage.setItem('refreshToken', refreshToken.token);
+      
+      return true;
     } catch (error) {
-        console.log('로그인 실패: ', error);
-        alert('로그인 실패')
+      console.error('로그인 실패:', error);
+      throw new Error('로그인에 실패했습니다.');
     }
-};
+  };
 
 export const logout = () => {
     localStorage.removeItem('accessToken');
