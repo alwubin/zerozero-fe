@@ -9,7 +9,7 @@ import ConfirmButton from "@/app/_components/common/ConfirmButton";
 import { checkEmailDuplicate, postSignup } from "@/app/api/signup";
 import { postLogin } from "@/app/api/login";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
   const {

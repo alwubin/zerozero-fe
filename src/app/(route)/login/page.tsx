@@ -7,7 +7,7 @@ import ConfrimButton from "@/app/_components/common/ConfirmButton";
 import HeaderMessage from "@/app/_components/common/HeaderMessage";
 import { postLogin } from "@/app/api/login";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const { email, password, setEmail, setPassword, resetState } =
