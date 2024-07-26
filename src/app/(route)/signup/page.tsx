@@ -6,16 +6,20 @@ import NicknameInput from "@/app/_components/login/NicknameInput";
 import EmailInput from "@/app/_components/login/EmailInput";
 import PasswordInput from "@/app/_components/login/PasswordInput";
 import ConfirmButton from "@/app/_components/common/ConfirmButton";
-import { checkEmailDuplicate } from "@/app/api/signup";
+import { checkEmailDuplicate, postSignup } from "@/app/api/signup";
+import { postLogin } from "@/app/api/login";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Signup() {
   const {
     step,
+    nickname,
     email,
     password,
     confirmPassword,
     setStep,
+    setNickname,
     setEmail,
     setPassword,
     setConfirmPassword,
@@ -26,6 +30,7 @@ export default function Signup() {
   const [emailShake, setEmailShake] = useState(false);
   const [passwordShake, setPasswordShake] = useState(false);
   const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
+  const router = useRouter();
 
   const getHeaderMessage = () => {
     switch (step) {
@@ -67,7 +72,7 @@ export default function Signup() {
             setStep(step + 1);
           }
         } catch (error) {
-          console.error("이메일 중복 검사 중 오류 발생:", error);
+          console.error("이메일 중복 오류 발생:", error);
           setIsEmailDuplicate(true);
           setEmailShake(true);
           setTimeout(() => setEmailShake(false), 500);
@@ -82,7 +87,49 @@ export default function Signup() {
         setPasswordShake(true);
         setTimeout(() => setPasswordShake(false), 200);
       } else {
-        alert("가입되었습니다.");
+        try {
+          const values = {
+            nickname: nickname,
+            email: email,
+            password: password,
+          };
+          const result = await postSignup(values);
+          if (!result) {
+            setEmailShake(true);
+            setNicknameShake(true);
+            setPasswordShake(true);
+            setTimeout(() => {
+              setEmailShake(false);
+              setNicknameShake(false);
+              setPasswordShake(false);
+            }, 500);
+          } else {
+            // 회원가입 성공 시 바로 로그인 진행
+            try {
+              const loginValues = {
+                email: email,
+                password: password,
+              };
+              await postLogin(loginValues);
+              alert("로그인되었습니다!");
+              router.push("/main");
+            } catch (loginError) {
+              console.error("자동 로그인 오류 발생:", loginError);
+              alert("다시 로그인해주세요.");
+              router.push("/login");
+            }
+          }
+        } catch (error) {
+          console.error("회원가입 오류 발생:", error);
+          setEmailShake(true);
+          setNicknameShake(true);
+          setPasswordShake(true);
+          setTimeout(() => {
+            setEmailShake(false);
+            setNicknameShake(false);
+            setPasswordShake(false);
+          }, 500);
+        }
       }
     }
   };
