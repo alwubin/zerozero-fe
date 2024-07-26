@@ -7,6 +7,7 @@ import ConfrimButton from "@/app/_components/common/ConfirmButton";
 import HeaderMessage from "@/app/_components/common/HeaderMessage";
 import { postLogin } from "@/app/api/login";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Login() {
   const { email, password, setEmail, setPassword, resetState } =
@@ -14,6 +15,7 @@ export default function Login() {
 
   const [emailShake, setEmailShake] = useState(false);
   const [passwordShake, setPasswordShake] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     resetState();
@@ -24,7 +26,22 @@ export default function Login() {
       email: email,
       password: password,
     };
-    await postLogin(values);
+    try {
+      const loginSuccess = await postLogin(values);
+      if (loginSuccess) {
+        alert("로그인 성공");
+        router.push("/main");
+      }
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      alert("로그인 실패");
+      setEmailShake(true);
+      setPasswordShake(true);
+      setTimeout(() => {
+        setEmailShake(false);
+        setPasswordShake(false);
+      }, 500);
+    }
   };
 
   return (
