@@ -1,5 +1,5 @@
 import axios from "axios";
-import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import { parseCookies, setCookie } from 'nookies';
 import { logout } from "./login";
 
 export const axiosInstance = axios.create({
