@@ -1,4 +1,5 @@
 import { axiosInstance } from "./interceptor"
+import { destroyCookie } from 'nookies';
 
 interface LoginProps {
     email: string;
@@ -31,8 +32,9 @@ interface LoginProps {
     }
   };
 
-export const logout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('pubId');
-}
+  export const logout = () => {
+    destroyCookie(null, 'accessToken');
+    destroyCookie(null, 'refreshToken');
+    window.location.href = '/';
+  };
+  
