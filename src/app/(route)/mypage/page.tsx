@@ -4,6 +4,7 @@ import { Navbar } from "@/app/_components/Navbar";
 import { UserProfile } from "@/app/_components/mypage/UserProfile";
 import { UserActivity } from "@/app/_components/mypage/UserActivity";
 import { getUserProfile } from "@/app/api/mypage";
+import { logout } from "@/app/api/login";
 
 interface UserProfileState {
   nickname: string;
@@ -46,7 +47,10 @@ export default function Mypage() {
         storeReportCount={userProfile.storeReportCount}
       />
 
-      <button className="bg-[#CD5C5C] mt-72 font-semibold text-white text-sm mx-5 py-5 rounded-xl">
+      <button
+        className="bg-[#CD5C5C] mt-72 font-semibold text-white text-sm mx-5 py-5 rounded-xl"
+        onClick={() => logout}
+      >
         로그아웃
       </button>
       <div className="mt-auto">
