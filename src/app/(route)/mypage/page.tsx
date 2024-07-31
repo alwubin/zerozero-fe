@@ -15,7 +15,7 @@ interface UserProfileState {
 export default function Mypage() {
   const [userProfile, setUserProfile] = useState<UserProfileState>({
     nickname: "",
-    profileImage: { url: "/images/user-icon.png" },
+    profileImage: { url: null },
     rank: null,
     storeReportCount: 0,
   });
@@ -26,9 +26,7 @@ export default function Mypage() {
       if (profile) {
         setUserProfile({
           ...profile,
-          profileImage: {
-            url: profile.profileImage.url || "/images/user-icon.png",
-          },
+          profileImage: profile.profileImage || { url: null },
         });
       }
     };
