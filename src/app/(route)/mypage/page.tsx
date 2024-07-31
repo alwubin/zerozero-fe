@@ -7,7 +7,7 @@ import { getUserProfile } from "@/app/api/mypage";
 
 interface UserProfileState {
   nickname: string;
-  profileImage: { url: string };
+  profileImage: { url: string | null };
   rank: number | null;
   storeReportCount: number;
 }
@@ -24,7 +24,12 @@ export default function Mypage() {
     const fetchUserProfile = async () => {
       const profile = await getUserProfile();
       if (profile) {
-        setUserProfile(profile);
+        setUserProfile({
+          ...profile,
+          profileImage: {
+            url: profile.profileImage.url || "/images/user-icon.png",
+          },
+        });
       }
     };
 

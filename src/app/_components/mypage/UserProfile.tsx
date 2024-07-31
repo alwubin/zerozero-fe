@@ -2,19 +2,19 @@ import Image from "next/image";
 
 interface ProfileProps {
   nickname: string;
-  profileImageUrl: string;
+  profileImageUrl: { url: string | null };
 }
 
 export const UserProfile: React.FC<ProfileProps> = ({
   nickname,
   profileImageUrl,
 }) => {
+  const imageUrl = profileImageUrl.url || "/images/user-icon.png";
+
   return (
     <div className="flex flex-col items-center mt-5">
       <Image
-        src={
-          profileImageUrl === null ? "/images/user-icon.png" : profileImageUrl
-        }
+        src={imageUrl}
         alt="user-icon"
         width={273}
         height={277}
