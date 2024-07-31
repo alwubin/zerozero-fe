@@ -1,12 +1,6 @@
 "use client";
 import React, { useState } from "react";
 
-// interface DetailItem {
-//   name: string;
-//   address: string;
-//   phone: string;
-// }
-
 interface ActivityItem {
   rank: number | null;
   storeReportCount: number;
