@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { UserIcon } from "@/app/assets";
 import { EditIcon } from "@/app/assets";
 
@@ -14,6 +15,7 @@ export const UserProfile: React.FC<ProfileProps> = ({
   uploadProfile,
 }) => {
   const imageUrl = profileImageUrl.url;
+  const router = useRouter();
 
   return (
     <div className="items-center justify-center">
@@ -40,7 +42,10 @@ export const UserProfile: React.FC<ProfileProps> = ({
         </div>
       </div>
       <div className="flex justify-center w-full">
-        <button className="bg-white mt-4 px-48 py-3 rounded-2xl text-xs font-bold">
+        <button
+          className="bg-white mt-4 px-48 py-3 rounded-2xl text-xs font-bold"
+          onClick={() => router.push("/mypage/profile")}
+        >
           프로필 수정
         </button>
       </div>
