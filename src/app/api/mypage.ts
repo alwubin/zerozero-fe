@@ -34,20 +34,28 @@ export const getUserProfile = async (): Promise<UserProfileResponse['userProfile
 }
 
   
-export const uploadImage = async (imageFile: File): Promise<UploadImageResponse> => {
-    try {
-      const formData = new FormData();
+export const updateProfile = async (nickname:string, imageFile = null) => {
+  try {
+    const formData = new FormData();
+    if (imageFile) {
       formData.append('imageFile', imageFile);
-  
-      const response: AxiosResponse<UploadImageResponse> = await axiosInstance.post('/user/image', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-  
-      return response.data;
-    } catch (error) {
-      console.error('이미지 업로드 중 오류 발생:', error);
-      throw error;
+    } else {
+      formData.append('imageFile', '');
     }
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      params: {
+        nickname: nickname
+      }
+    };
+
+    const response = await axiosInstance.patch('/user', formData, config);
+    return response.data;
+  } catch (error) {
+    console.error('프로필 업데이트 중 오류 발생:', error);
+    throw error;
+  }
 };
