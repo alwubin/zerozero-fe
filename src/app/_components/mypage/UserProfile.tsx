@@ -16,25 +16,32 @@ export const UserProfile: React.FC<ProfileProps> = ({
   const imageUrl = profileImageUrl.url;
 
   return (
-    <div className="flex flex-col items-center mt-5">
-      {imageUrl ? (
-        <Image
-          src={imageUrl}
-          alt="user-icon"
-          width={273}
-          height={277}
-          className="w-20"
-        />
-      ) : (
-        <UserIcon />
-      )}
-      <div className="mt-3 relative">
-        <span className="font-bold text-3xl">{nickname}</span>
-        <button
-          className="cursor-pointer absolute top-1/2 -translate-y-1/2 ml-2 inline-flex items-center"
-          onClick={uploadProfile}
-        >
-          <EditIcon className="w-5 h-5" />
+    <div className="items-center justify-center">
+      <div className="ml-7 flex flex-row items-center mt-5">
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt="user-icon"
+            width={70}
+            height={70}
+            className="rounded-full object-cover w-[70px] h-[70px]"
+          />
+        ) : (
+          <UserIcon />
+        )}
+        <div className="mt-3 relative ml-7">
+          <span className="font-bold text-xl">{nickname}</span>
+          <button
+            className="cursor-pointer absolute top-1/2 -translate-y-1/2 ml-2 inline-flex items-center"
+            onClick={uploadProfile}
+          >
+            <EditIcon className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+      <div className="flex justify-center w-full">
+        <button className="bg-white mt-4 px-48 py-3 rounded-2xl text-xs font-bold">
+          프로필 수정
         </button>
       </div>
     </div>

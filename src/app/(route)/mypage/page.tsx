@@ -80,7 +80,7 @@ export default function Mypage() {
       />
 
       <button
-        className="bg-[#CD5C5C] mt-72 font-semibold text-white text-sm mx-5 py-5 rounded-xl"
+        className="bg-[#CD5C5C] mt-80 font-semibold text-white text-sm mx-5 py-4 rounded-3xl"
         onClick={() => logout()}
       >
         로그아웃
