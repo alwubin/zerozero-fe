@@ -5,11 +5,13 @@ import { EditIcon } from "@/app/assets";
 interface ProfileProps {
   nickname: string;
   profileImageUrl: { url: string | null };
+  uploadProfile: () => void;
 }
 
 export const UserProfile: React.FC<ProfileProps> = ({
   nickname,
   profileImageUrl,
+  uploadProfile,
 }) => {
   const imageUrl = profileImageUrl.url;
 
@@ -28,7 +30,10 @@ export const UserProfile: React.FC<ProfileProps> = ({
       )}
       <div className="mt-3 relative">
         <span className="font-bold text-3xl">{nickname}</span>
-        <button className="cursor-pointer absolute top-1/2 -translate-y-1/2 ml-2 inline-flex items-center">
+        <button
+          className="cursor-pointer absolute top-1/2 -translate-y-1/2 ml-2 inline-flex items-center"
+          onClick={uploadProfile}
+        >
           <EditIcon className="w-5 h-5" />
         </button>
       </div>
