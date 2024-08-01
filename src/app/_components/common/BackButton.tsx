@@ -1,6 +1,6 @@
 "use client";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { BackIcon } from "@/app/assets";
 
 const BackButton = () => {
   const router = useRouter();
@@ -14,17 +14,10 @@ const BackButton = () => {
   };
 
   return (
-    <div
+    <BackIcon
       className="justify-start ml-9 mt-9 cursor-pointer"
       onClick={handleBackButton}
-    >
-      <Image
-        src="/images/back-button.png"
-        alt="back-button"
-        width={24}
-        height={24}
-      />
-    </div>
+    />
   );
 };
 

@@ -1,18 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Navbar } from "@/app/_components/Navbar";
-import {
-  Map,
-  MapMarker,
-  useKakaoLoader,
-  CustomOverlayMap,
-} from "react-kakao-maps-sdk";
+import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
+import { SearchIcon } from "@/app/assets";
 
 interface State {
   center: { lat: number; lng: number };
   errMsg: string | null;
   isLoading: boolean;
 }
+
 export default function Main() {
   const [clickedIndex, setClickedIndex] = useState<number | null>(null);
   const positions = [
@@ -77,7 +74,6 @@ export default function Main() {
 
   return (
     <div className="relative w-full h-screen">
-      {" "}
       <div className="absolute z-10 top-4 left-1/2 transform -translate-x-1/2 w-full max-w-md px-4">
         <div className="relative">
           <input
@@ -85,29 +81,14 @@ export default function Main() {
             placeholder="키워드 또는 장소명 검색"
             className="w-full py-5 pl-4 pr-10 text-sm bg-white rounded-xl focus:outline-none focus:border-gray-400"
           />
-          <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-            <svg
-              className="w-5 h-5 text-gray-400"
-              fill="none"
-              stroke="#434343"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              ></path>
-            </svg>
-          </div>
+          <SearchIcon className="absolute right-5 bottom-4 flex items-center" />
         </div>
       </div>
       <Map
         center={state.center}
         style={{
           width: "100%",
-          height: "calc(100vh - 64px)",
+          height: "100%",
         }}
         level={3}
       >
