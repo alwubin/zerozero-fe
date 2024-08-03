@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
@@ -36,7 +37,7 @@ export default function Profile() {
 
       if (response) {
         alert("프로필이 성공적으로 업데이트되었습니다.");
-        router.push("/profile");
+        router.push("/mypage");
       }
     } catch (error) {
       console.error("프로필 업데이트 실패:", error);
