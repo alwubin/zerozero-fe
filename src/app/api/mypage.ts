@@ -1,5 +1,4 @@
 import { axiosInstance } from "./interceptor"
-import { AxiosResponse } from 'axios';
 
 interface UserProfileResponse {
     success: boolean;
@@ -12,10 +11,6 @@ interface UserProfileResponse {
         storeReportCount: number; // 기본값 0
     };
 }
-
-interface UploadImageResponse {
-    imageUrl: string;
-  }
 
 export const getUserProfile = async (): Promise<UserProfileResponse['userProfile'] | null> => {
     try {
@@ -34,7 +29,7 @@ export const getUserProfile = async (): Promise<UserProfileResponse['userProfile
 }
 
   
-export const updateProfile = async (nickname:string, imageFile = null) => {
+export const updateProfile = async (nickname: string, imageFile: File | null | undefined) => {
   try {
     const formData = new FormData();
     if (imageFile) {
