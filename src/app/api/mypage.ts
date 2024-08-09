@@ -54,3 +54,19 @@ export const updateProfile = async (nickname: string, imageFile: File | null | u
     throw error;
   }
 };
+
+export const getReportItemList = async () => {
+  try {
+    const { data } = await axiosInstance.get('/user/stores');
+
+    if (data.success) {
+      return data.stores;
+    } else {
+      console.error('등록한 판매점 목록 조회 실패');
+      return null;
+    }
+  } catch (error) {
+    console.error('등록한 판매점 목록 조회 실패: ', error);
+    return null;
+}
+}

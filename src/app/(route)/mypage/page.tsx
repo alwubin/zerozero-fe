@@ -1,10 +1,10 @@
-"use client";
-import React, { useState, useEffect, useRef } from "react";
-import { Navbar } from "@/app/_components/Navbar";
-import { UserProfile } from "@/app/_components/mypage/UserProfile";
-import { UserActivity } from "@/app/_components/mypage/UserActivity";
-import { getUserProfile } from "@/app/api/mypage";
-import { logout } from "@/app/api/login";
+'use client';
+import React, { useState, useEffect, useRef } from 'react';
+import { Navbar } from '@/app/_components/Navbar';
+import { UserProfile } from '@/app/_components/mypage/UserProfile';
+import { UserActivity } from '@/app/_components/mypage/UserActivity';
+import { getUserProfile } from '@/app/api/mypage';
+import { logout } from '@/app/api/login';
 
 interface UserProfileState {
   nickname: string;
@@ -15,7 +15,7 @@ interface UserProfileState {
 
 export default function Mypage() {
   const [userProfile, setUserProfile] = useState<UserProfileState>({
-    nickname: "",
+    nickname: '',
     profileImage: { url: null },
     rank: null,
     storeReportCount: 0,
@@ -36,7 +36,7 @@ export default function Mypage() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F2F4F6] w-full">
+    <div className="flex flex-col min-h-screen bg-point w-full">
       <div className="mt-8 font-bold text-lg ml-7">마이페이지</div>
       <UserProfile
         nickname={userProfile.nickname}
@@ -47,13 +47,13 @@ export default function Mypage() {
         storeReportCount={userProfile.storeReportCount}
       />
 
-      <button
-        className="bg-[#CD5C5C] mt-80 font-semibold text-white text-sm mx-5 py-4 rounded-3xl"
-        onClick={() => logout()}
-      >
-        로그아웃
-      </button>
       <div className="mt-auto">
+        <button
+          className="bg-main w-11/12 mb-24 font-semibold text-white text-sm mx-5 py-4 rounded-3xl"
+          onClick={() => logout()}
+        >
+          로그아웃
+        </button>
         <Navbar />
       </div>
     </div>
