@@ -1,19 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-
-interface StoreProps {
-  id?: string;
-  kakaoId?: string;
-  name?: string;
-  category?: string;
-  phone?: string;
-  address?: string;
-  roadAddress?: string;
-  longitude?: string;
-  latitude?: string;
-  status?: boolean;
-  images?: string[];
-  placeUrl?: string;
-}
+import { StoreProps } from '@/app/(route)/main/page';
 
 interface ListProps {
   storeList: StoreProps[];
