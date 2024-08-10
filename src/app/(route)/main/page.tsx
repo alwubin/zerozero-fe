@@ -1,8 +1,9 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Navbar } from "@/app/_components/Navbar";
-import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
-import { SearchIcon } from "@/app/assets";
+'use client';
+import { useEffect, useState } from 'react';
+import { Navbar } from '@/app/_components/Navbar';
+import Carousel from '@/app/_components/landing/Carousel';
+import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
+import { SearchIcon } from '@/app/assets';
 
 interface State {
   center: { lat: number; lng: number };
@@ -11,29 +12,48 @@ interface State {
 }
 
 export default function Main() {
-  const [clickedIndex, setClickedIndex] = useState<number | null>(null);
-  const positions = [
+  const [clickedIndex, setClickedIndex] = useState<string | null>(null);
+  const storeList = [
     {
-      title: "카카오",
+      id: '1',
+      name: '목구멍 판교점',
+      category: '한식, 육류, 고기',
+      address: '경기 성남시 분당구 판교역로 160',
       latlng: { lat: 33.450705, lng: 126.570677 },
     },
     {
-      title: "생태연못",
+      id: '2',
+      name: '생태연못',
+      category: '한식, 육류, 고기',
+      address: '경기 성남시 분당구 판교역로 160',
       latlng: { lat: 33.450936, lng: 126.569477 },
     },
     {
-      title: "텃밭",
+      id: '3',
+      name: '텃밭',
+      category: '한식, 육류, 고기',
+      address: '경기 성남시 분당구 판교역로 160',
       latlng: { lat: 33.450879, lng: 126.56994 },
     },
     {
-      title: "근린공원",
+      id: '4',
+      name: '근린공원',
+      category: '한식, 육류, 고기',
+      address: '경기 성남시 분당구 판교역로 160',
       latlng: { lat: 33.451393, lng: 126.570738 },
+    },
+    {
+      id: '5',
+      name: '서호빵',
+      category: '한식, 육류, 고기',
+      address: '경기 성남시 분당구 판교역로 160',
+      latlng: { lat: 33.451321, lng: 126.570138 },
     },
   ];
 
   const [loading] = useKakaoLoader({
-    appkey: "2144548903f3f35b5a276d8984e61bc0",
-    libraries: ["services", "clusterer", "drawing"],
+    appkey: '2144548903f3f35b5a276d8984e61bc0',
+    libraries: ['services', 'clusterer', 'drawing'],
   });
 
   const [state, setState] = useState<State>({
@@ -61,12 +81,12 @@ export default function Main() {
             errMsg: err.message,
             isLoading: false,
           }));
-        }
+        },
       );
     } else {
       setState((prev) => ({
         ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
+        errMsg: 'geolocation을 사용할수 없어요..',
         isLoading: false,
       }));
     }
@@ -87,33 +107,38 @@ export default function Main() {
       <Map
         center={state.center}
         style={{
-          width: "100%",
-          height: "100%",
+          width: '100%',
+          height: '100%',
         }}
         level={3}
       >
-        {positions.map((position, index) => (
+        {storeList.map((store) => (
           <MapMarker
-            key={`${position.title}-${position.latlng}`}
-            position={position.latlng}
+            key={store.id}
+            position={store.latlng}
             image={{
               src:
-                clickedIndex === index
-                  ? "/images/clicked-no-zero-marker.png"
-                  : "/images/no-zero-marker.png",
+                clickedIndex === store.id
+                  ? '/images/clicked-no-zero-marker.png'
+                  : '/images/no-zero-marker.png',
               size: {
                 width: 28,
                 height: 36,
               },
             }}
-            title={position.title}
+            title={store.name}
             clickable={true}
             onClick={() => {
-              setClickedIndex(index === clickedIndex ? null : index);
+              setClickedIndex(store.id === clickedIndex ? null : store.id);
             }}
           />
         ))}
       </Map>
+
+      <div className="absolute bottom-40 left-0 right-0 z-20">
+        <Carousel storeList={storeList} clickedIndex={clickedIndex} />
+      </div>
+
       <div className="mt-auto">
         <Navbar />
       </div>
