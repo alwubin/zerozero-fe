@@ -1,6 +1,6 @@
-"use client";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+'use client';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import {
   HomeIcon,
   HomeIconActive,
@@ -10,34 +10,34 @@ import {
   ChatIconActive,
   MyPageIcon,
   MyPageIconActive,
-} from "../assets";
-import Home from "../page";
+} from '../assets';
+import Home from '../page';
 
 export const Navbar = () => {
   const pathname = usePathname();
 
   const navItems = [
     {
-      href: "/main",
-      label: "홈",
+      href: '/landing',
+      label: '홈',
       icon: (isActive: boolean) =>
         isActive ? <HomeIconActive /> : <HomeIcon />,
     },
     {
-      href: "/report",
-      label: "제보",
+      href: '/report',
+      label: '제보',
       icon: (isActive: boolean) =>
         isActive ? <ReportIconActive /> : <ReportIcon />,
     },
     {
-      href: "/chat",
-      label: "채팅",
+      href: '/chat',
+      label: '채팅',
       icon: (isActive: boolean) =>
         isActive ? <ChatIconActive /> : <ChatIcon />,
     },
     {
-      href: "/mypage",
-      label: "마이페이지",
+      href: '/mypage',
+      label: '마이페이지',
       icon: (isActive: boolean) =>
         isActive ? <MyPageIconActive /> : <MyPageIcon />,
     },
@@ -57,8 +57,8 @@ export const Navbar = () => {
               <span
                 className={`text-xs mt-1 ${
                   pathname === item.href
-                    ? "text-gray-700 font-semibold"
-                    : "text-gray-700"
+                    ? 'text-gray-700 font-semibold'
+                    : 'text-gray-700'
                 }`}
               >
                 {item.label}
