@@ -1,13 +1,13 @@
-"use client";
-import { useLoginStore } from "@/app/store/loginStore";
-import EmailInput from "../../_components/login/EmailInput";
-import PasswordInput from "../../_components/login/PasswordInput";
-import BackButton from "@/app/_components/common/BackButton";
-import ConfrimButton from "@/app/_components/common/ConfirmButton";
-import HeaderMessage from "@/app/_components/common/HeaderMessage";
-import { postLogin } from "@/app/api/login";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+'use client';
+import { useLoginStore } from '@/app/store/loginStore';
+import EmailInput from '../../_components/login/EmailInput';
+import PasswordInput from '../../_components/login/PasswordInput';
+import BackButton from '@/app/_components/common/BackButton';
+import ConfrimButton from '@/app/_components/common/ConfirmButton';
+import HeaderMessage from '@/app/_components/common/HeaderMessage';
+import { postLogin } from '@/app/api/login';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
   const { email, password, setEmail, setPassword, resetState } =
@@ -29,12 +29,12 @@ export default function Login() {
     try {
       const loginSuccess = await postLogin(values);
       if (loginSuccess) {
-        alert("로그인 성공");
-        router.push("/main");
+        alert('로그인 성공');
+        router.push('/landing');
       }
     } catch (error) {
-      console.error("로그인 실패:", error);
-      alert("로그인 실패");
+      console.error('로그인 실패:', error);
+      alert('로그인 실패');
       setEmailShake(true);
       setPasswordShake(true);
       setTimeout(() => {
