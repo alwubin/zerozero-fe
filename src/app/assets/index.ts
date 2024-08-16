@@ -30,3 +30,4 @@ export { default as NoZeroMarker } from './svgs/no-zero-marker.svg';
 // report list 
 export { default as ZeroIcon } from './svgs/zero-icon.svg';
 export { default as NoZeroIcon } from './svgs/no-zero-icon.svg';
+export { default as PlusIcon } from './svgs/plus-icon.svg'
