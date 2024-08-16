@@ -20,3 +20,35 @@ export const searchStore = async (query: string) => {
         return null;
     }
 }
+
+export const registerStore = async (placeName: string, longitude: string, latitude: string, imageFiles: File[]) => {
+    try {
+        const formData = new FormData();
+        formData.append('placeName', placeName);
+        formData.append('longitude', longitude);
+        formData.append('latitude', latitude);
+
+        imageFiles.forEach((file) => {
+            formData.append('imageFiles', file);
+        });
+
+        const { data } = await axiosInstance.post('/store', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'accept': '*/*',
+            },
+        });
+
+        if (data.success) {
+            console.log('가게 등록 성공:', data);
+            alert('등록되었습니다!') 
+            return data;
+        } else {
+            console.error('가게 등록 실패:', data.message);
+            return null;
+        }
+    } catch (error) {
+        console.error('가게 등록 중 오류 발생:', error);
+        return null;
+    }
+};
