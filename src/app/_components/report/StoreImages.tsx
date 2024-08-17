@@ -9,7 +9,6 @@ const StoreImage = () => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const newImageFiles = Array.from(event.target.files) as File[];
-      // 기존 이미지 파일과 새로 선택한 파일을 병합
       setImageFiles([...imageFiles, ...newImageFiles]);
     }
   };
