@@ -39,15 +39,15 @@ export default function Main() {
     setQuery(e.target.value);
   };
 
-  const fetchStoreList = async (query: string) => {
-    const storeList = await searchStore(query);
+  const fetchStoreList = async () => {
+    const storeList = await searchStore(query, longitude, latitude);
     if (storeList) {
       setStoreList(storeList);
     }
   };
 
   const [loading] = useKakaoLoader({
-    appkey: '2144548903f3f35b5a276d8984e61bc0',
+    appkey: `${process.env.NEXT_PUBLIC_APP_KEY}`,
     libraries: ['services', 'clusterer', 'drawing'],
   });
 
@@ -98,7 +98,7 @@ export default function Main() {
         <SearchBar
           query={query}
           onChange={handleQuery}
-          onSearch={() => fetchStoreList(query)}
+          onSearch={() => fetchStoreList()}
         />
       </div>
 
@@ -109,7 +109,7 @@ export default function Main() {
         onMarkerClick={setClickedIndex}
       />
 
-      {storeList && (
+      {storeList && clickedIndex && (
         <StoreCarousel storeList={storeList} clickedIndex={clickedIndex} />
       )}
 
