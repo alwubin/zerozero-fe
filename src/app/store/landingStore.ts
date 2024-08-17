@@ -7,6 +7,7 @@ interface LandingState {
     setLatitude: (latitude: string) => void;
     setLongitude: (longitude: string) => void;
     setQuery: (query: string) => void;
+    resetLanding: () => void;  
 }
 
 export const useLandingStore = create<LandingState>((set) => ({
@@ -16,4 +17,10 @@ export const useLandingStore = create<LandingState>((set) => ({
     setLatitude: (latitude) => set({latitude}),
     setLongitude: (longitude) => set({longitude}),
     setQuery: (query) => set({ query }),
+    resetLanding: () =>
+        set({
+            latitude: '',
+            longitude:'',
+          query: '',
+        }),  
 }));  
