@@ -37,7 +37,11 @@ export function KakaoMap({
                 image={{
                   src:
                     clickedIndex === kakaoId
-                      ? '/images/clicked-no-zero-marker.png'
+                      ? store.status
+                        ? '/images/clicked-yes-zero-marker.png'
+                        : '/images/clicked-no-zero-marker.png'
+                      : store.status
+                      ? '/images/yes-zero-marker.png'
                       : '/images/no-zero-marker.png',
                   size: {
                     width: 28,
