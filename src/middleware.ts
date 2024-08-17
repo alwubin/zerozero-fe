@@ -9,10 +9,10 @@ export function middleware(request: NextRequest) {
     console.log('현재 경로:', pathname, '인증 상태:', auth);
 
     if (auth && (pathname === '/' || pathname === '/login' || pathname === '/signup')) {
-        return NextResponse.redirect(new URL('/main', request.url));
+        return NextResponse.redirect(new URL('/landing', request.url));
     }
 
-    if (!auth && (pathname.startsWith('/main') || pathname.startsWith('/mypage') || pathname.startsWith('/report') || pathname.startsWith('/detail'))) {
+    if (!auth && (pathname.startsWith('/landing') || pathname.startsWith('/mypage') || pathname.startsWith('/report') || pathname.startsWith('/detail'))) {
         return NextResponse.redirect(new URL('/', request.url));
     }
 

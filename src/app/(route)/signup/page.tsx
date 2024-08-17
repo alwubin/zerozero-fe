@@ -1,15 +1,15 @@
-"use client";
-import { useSignupStore } from "@/app/store/signupStore";
-import BackButton from "@/app/_components/common/BackButton";
-import HeaderMessage from "@/app/_components/common/HeaderMessage";
-import NicknameInput from "@/app/_components/login/NicknameInput";
-import EmailInput from "@/app/_components/login/EmailInput";
-import PasswordInput from "@/app/_components/login/PasswordInput";
-import ConfirmButton from "@/app/_components/common/ConfirmButton";
-import { checkEmailDuplicate, postSignup } from "@/app/api/signup";
-import { postLogin } from "@/app/api/login";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+'use client';
+import { useSignupStore } from '@/app/store/signupStore';
+import BackButton from '@/app/_components/common/BackButton';
+import HeaderMessage from '@/app/_components/common/HeaderMessage';
+import NicknameInput from '@/app/_components/login/NicknameInput';
+import EmailInput from '@/app/_components/login/EmailInput';
+import PasswordInput from '@/app/_components/login/PasswordInput';
+import ConfirmButton from '@/app/_components/common/ConfirmButton';
+import { checkEmailDuplicate, postSignup } from '@/app/api/signup';
+import { postLogin } from '@/app/api/login';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Signup() {
   const {
@@ -35,13 +35,13 @@ export default function Signup() {
   const getHeaderMessage = () => {
     switch (step) {
       case 1:
-        return "닉네임을 알려주세요";
+        return '닉네임을 알려주세요';
       case 2:
-        return "이메일을 입력해주세요";
+        return '이메일을 입력해주세요';
       case 3:
-        return "비밀번호를 입력해주세요";
+        return '비밀번호를 입력해주세요';
       default:
-        return "";
+        return '';
     }
   };
 
@@ -72,7 +72,7 @@ export default function Signup() {
             setStep(step + 1);
           }
         } catch (error) {
-          console.error("이메일 중복 오류 발생:", error);
+          console.error('이메일 중복 오류 발생:', error);
           setIsEmailDuplicate(true);
           setEmailShake(true);
           setTimeout(() => setEmailShake(false), 500);
@@ -111,16 +111,16 @@ export default function Signup() {
                 password: password,
               };
               await postLogin(loginValues);
-              alert("로그인되었습니다!");
-              router.push("/main");
+              alert('로그인되었습니다!');
+              router.push('/landing');
             } catch (loginError) {
-              console.error("자동 로그인 오류 발생:", loginError);
-              alert("다시 로그인해주세요.");
-              router.push("/login");
+              console.error('자동 로그인 오류 발생:', loginError);
+              alert('다시 로그인해주세요.');
+              router.push('/login');
             }
           }
         } catch (error) {
-          console.error("회원가입 오류 발생:", error);
+          console.error('회원가입 오류 발생:', error);
           setEmailShake(true);
           setNicknameShake(true);
           setPasswordShake(true);
