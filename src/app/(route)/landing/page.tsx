@@ -1,10 +1,12 @@
 'use client';
 import { useEffect, useState, ChangeEvent } from 'react';
 import { Navbar } from '@/app/_components/Navbar';
-import Carousel from '@/app/_components/landing/Carousel';
-import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
-import { SearchIcon } from '@/app/assets';
+import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { searchStore } from '@/app/api/landing';
+import { useLandingStore } from '@/app/store/landingStore';
+import { SearchBar } from '@/app/_components/landing/SearchBar';
+import { KakaoMap } from '@/app/_components/landing/KakaoMap';
+import { StoreCarousel } from '@/app/_components/landing/StoreCarousel';
 
 interface State {
   center: { lat: number; lng: number };
@@ -30,21 +32,22 @@ export interface StoreProps {
 export default function Main() {
   const [clickedIndex, setClickedIndex] = useState<string | null>(null);
   const [storeList, setStoreList] = useState<StoreProps[] | null>(null);
-  const [query, setQuery] = useState('');
+  const { latitude, longitude, query, setLatitude, setLongitude, setQuery } =
+    useLandingStore();
 
   const handleQuery = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
-  const fetchStoreList = async (query: string) => {
-    const storeList = await searchStore(query);
+  const fetchStoreList = async () => {
+    const storeList = await searchStore(query, longitude, latitude);
     if (storeList) {
       setStoreList(storeList);
     }
   };
 
   const [loading] = useKakaoLoader({
-    appkey: '2144548903f3f35b5a276d8984e61bc0',
+    appkey: `${process.env.NEXT_PUBLIC_APP_KEY}`,
     libraries: ['services', 'clusterer', 'drawing'],
   });
 
@@ -58,11 +61,16 @@ export default function Main() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          const { latitude, longitude } = position.coords;
+
+          setLatitude(latitude.toString());
+          setLongitude(longitude.toString());
+
           setState((prev) => ({
             ...prev,
             center: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
+              lat: latitude,
+              lng: longitude,
             },
             isLoading: false,
           }));
@@ -82,72 +90,28 @@ export default function Main() {
         isLoading: false,
       }));
     }
-  }, []);
+  }, [setLatitude, setLongitude]);
 
   return (
     <div className="relative w-full h-screen">
       <div className="absolute z-10 top-4 left-1/2 transform -translate-x-1/2 w-full max-w-md px-4">
-        <div className="relative">
-          <input
-            type="text"
-            value={query}
-            onChange={handleQuery}
-            placeholder="키워드 또는 장소명 검색"
-            className="w-full py-5 pl-4 pr-10 text-sm bg-white rounded-xl focus:outline-none focus:border-gray-400"
-          />
-          <SearchIcon
-            className="absolute right-5 bottom-4 flex items-center"
-            onClick={() => fetchStoreList(query)}
-          />
-        </div>
+        <SearchBar
+          query={query}
+          onChange={handleQuery}
+          onSearch={() => fetchStoreList()}
+        />
       </div>
-      <Map
-        center={state.center}
-        style={{
-          width: '100%',
-          height: '100%',
-        }}
-        level={3}
-      >
-        {storeList
-          ? storeList.map((store) => (
-              <MapMarker
-                key={store.id}
-                position={{
-                  lat: store.latitude ? parseFloat(store.latitude) : 0,
-                  lng: store.longitude ? parseFloat(store.longitude) : 0,
-                }}
-                image={{
-                  src:
-                    clickedIndex === store.id
-                      ? '/images/clicked-no-zero-marker.png'
-                      : '/images/no-zero-marker.png',
-                  size: {
-                    width: 28,
-                    height: 36,
-                  },
-                }}
-                title={store.name}
-                clickable={true}
-                onClick={() => {
-                  setClickedIndex(
-                    store.id
-                      ? store.id === clickedIndex
-                        ? null
-                        : store.id
-                      : null,
-                  );
-                }}
-              />
-            ))
-          : null}
-      </Map>
 
-      {storeList ? (
-        <div className="absolute bottom-40 left-0 right-0 z-20">
-          <Carousel storeList={storeList} clickedIndex={clickedIndex} />
-        </div>
-      ) : null}
+      <KakaoMap
+        center={state.center}
+        storeList={storeList}
+        clickedIndex={clickedIndex}
+        onMarkerClick={setClickedIndex}
+      />
+
+      {storeList && clickedIndex && (
+        <StoreCarousel storeList={storeList} clickedIndex={clickedIndex} />
+      )}
 
       <div className="mt-auto">
         <Navbar />

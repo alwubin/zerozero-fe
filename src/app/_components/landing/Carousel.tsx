@@ -1,5 +1,10 @@
+'use client';
 import React, { useRef, useState, useEffect } from 'react';
-import { StoreProps } from '@/app/(route)/main/page';
+import { StoreProps } from '@/app/(route)/landing/page';
+import { useSelectStore } from '@/app/store/reportStore';
+import { useSelectedStore } from '@/app/store/detailStore';
+import { useRouter } from 'next/navigation';
+import { getStoreInfo } from '@/app/api/detail';
 
 interface ListProps {
   storeList: StoreProps[];
@@ -7,20 +12,35 @@ interface ListProps {
 }
 
 const Carousel = ({ storeList, clickedIndex }: ListProps) => {
+  const router = useRouter();
+  const {
+    id,
+    setId,
+    setPlaceName,
+    setPhone,
+    setCategory,
+    setAddress,
+    setLongitude,
+    setLatitude,
+    setStatus,
+  } = useSelectStore();
+  const { setImages, setReviews, setZeroDrinks, filter } = useSelectedStore();
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
+  const [currentStore, setCurrentStore] = useState<StoreProps | null>(null);
+
   const dummyStart = {
-    id: 'start',
+    kakaoId: 'start',
     name: ' ',
     category: 'dummydata',
     address: 'dummy',
   };
   const dummyEnd = {
-    id: 'end',
+    kakaoId: 'end',
     name: ' ',
     category: 'dummydata',
     address: 'dummy',
@@ -31,14 +51,14 @@ const Carousel = ({ storeList, clickedIndex }: ListProps) => {
   useEffect(() => {
     if (clickedIndex) {
       const originalIndex = storeList.findIndex(
-        (store) => store.id === clickedIndex,
+        (store) => store.kakaoId === clickedIndex,
       );
 
       if (originalIndex === -1) return;
 
       const adjustedIndex = originalIndex + 1;
 
-      const targetId = extendedStoreList[adjustedIndex]?.id;
+      const targetId = extendedStoreList[adjustedIndex]?.kakaoId;
 
       if (targetId && itemRefs.current[targetId]) {
         itemRefs.current[targetId]?.scrollIntoView({
@@ -47,7 +67,31 @@ const Carousel = ({ storeList, clickedIndex }: ListProps) => {
         });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clickedIndex, storeList]);
+
+  useEffect(() => {
+    if (currentStore) {
+      setId(currentStore.id ?? '');
+      setPlaceName(currentStore.name ?? '');
+      setPhone(currentStore.phone ?? '');
+      setCategory(currentStore.category ?? '');
+      setAddress(currentStore.address ?? '');
+      setLongitude(currentStore.longitude ?? '');
+      setLatitude(currentStore.latitude ?? '');
+      setStatus(currentStore.status ?? false);
+      console.log(id);
+    }
+  }, [
+    currentStore,
+    setPlaceName,
+    setPhone,
+    setCategory,
+    setAddress,
+    setLongitude,
+    setLatitude,
+    setStatus,
+  ]);
 
   const startDrag = (e: React.MouseEvent<HTMLDivElement>) => {
     if (carouselRef.current) {
@@ -81,32 +125,41 @@ const Carousel = ({ storeList, clickedIndex }: ListProps) => {
       <div className="flex space-x-6 overflow-x-scroll scrollbar-hide cursor-pointer select-none">
         {extendedStoreList.map((store, index) => {
           const originalIndex = storeList.findIndex(
-            (s) => s.id === clickedIndex,
+            (s) => s.kakaoId === clickedIndex,
           );
           const isCurrent = index === originalIndex + 1;
-          const isAdjacent =
-            index === originalIndex || index === originalIndex + 2;
+
+          if (isCurrent && currentStore !== store) {
+            setCurrentStore(store);
+          }
 
           return (
             <div
-              key={store.id || `store-${index}`}
+              key={store.kakaoId || `store-${index}`}
               ref={(el) => {
-                if (store.id) {
-                  itemRefs.current[store.id] = el;
+                if (store.kakaoId) {
+                  itemRefs.current[store.kakaoId] = el;
                 }
               }}
-              className={`min-w-64 px-5 py-4 bg-white rounded-2xl ${
-                store.id === 'dummy-start' || store.id === 'dummy-end'
+              className={`min-w-64 px-4 py-4 bg-white rounded-2xl ${
+                store.kakaoId === 'dummy-start' || store.kakaoId === 'dummy-end'
                   ? 'hidden'
                   : ''
               }`}
             >
               {isCurrent ? (
                 <>
-                  <h3 className="text-xl font-bold">{store.name}</h3>
-                  <p className="text-[#A5A5A5] font-light">{store.category}</p>
-                  <p className="text-black font-light">{store.address}</p>
-                  <button className="mt-8 px-4 py-2 text-xs text-white bg-main rounded-lg">
+                  <h3 className="text-lg font-bold">{store.name}</h3>
+                  <p className="text-[#A5A5A5] font-light text-xs">
+                    {store.category}
+                  </p>
+                  <p className="text-black font-light text-sm">
+                    {store.address}
+                  </p>
+                  <button
+                    onClick={() => router.push('/detail')}
+                    className="mt-9 px-5 py-2 text-[10px] text-white bg-main rounded-xl font-semibold"
+                  >
                     더보기
                   </button>
                 </>
