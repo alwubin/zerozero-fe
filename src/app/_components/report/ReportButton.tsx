@@ -1,21 +1,17 @@
 'use client';
 import React from 'react';
 import { registerStore } from '@/app/api/report';
-import { useSelectStore } from '@/app/store/reportStore';
+import { useSelectStore, useSearchStore } from '@/app/store/reportStore';
+
 import { useRouter } from 'next/navigation';
 
 export const ReportButton: React.FC = () => {
-  const { placeName, longitude, latitude, imageFiles } = useSelectStore();
+  const { placeName, longitude, latitude, imageFiles, resetSelectStore } =
+    useSelectStore();
+  const { resetSearchStore } = useSearchStore();
+
   const router = useRouter();
   const handleReport = async () => {
-    if (!placeName || !longitude || !latitude) {
-      alert('가게를 선택해주세요!');
-      return;
-    } else if (imageFiles.length === 0) {
-      alert('사진을 추가해주세요!');
-      return;
-    }
-
     try {
       const response = await registerStore(
         placeName,
@@ -25,6 +21,8 @@ export const ReportButton: React.FC = () => {
       );
       if (response) {
         alert('판매점이 등록되었습니다!');
+        resetSearchStore();
+        resetSelectStore();
         router.push('/landing');
       } else {
         alert('다시 시도해주세요.');

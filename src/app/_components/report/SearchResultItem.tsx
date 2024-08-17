@@ -10,6 +10,8 @@ interface SearchResultItemProps extends SearchResult {
 export const SearchResultItem = ({
   name,
   roadAddress,
+  longitude,
+  latitude,
   phone,
   status,
 }: SearchResultItemProps) => {
@@ -20,8 +22,8 @@ export const SearchResultItem = ({
   const handleResultClick = () => {
     setPlaceName(name ?? '');
     setAddress(roadAddress ?? '');
-    setLongitude('');
-    setLatitude('');
+    setLongitude(longitude ?? '');
+    setLatitude(latitude ?? '');
 
     setSearchResults([]);
   };
