@@ -21,31 +21,35 @@ export function KakaoMap({
         width: '100%',
         height: '100%',
       }}
-      level={3}
+      level={5}
     >
       {storeList
-        ? storeList.map((store) => (
-            <MapMarker
-              key={store.id}
-              position={{
-                lat: store.latitude ? parseFloat(store.latitude) : 0,
-                lng: store.longitude ? parseFloat(store.longitude) : 0,
-              }}
-              image={{
-                src:
-                  clickedIndex === store.id
-                    ? '/images/clicked-no-zero-marker.png'
-                    : '/images/no-zero-marker.png',
-                size: {
-                  width: 28,
-                  height: 36,
-                },
-              }}
-              title={store.name}
-              clickable={true}
-              onClick={() => onMarkerClick(store.id ? store.id : null)}
-            />
-          ))
+        ? storeList.map((store) => {
+            const kakaoId = store.kakaoId || null;
+
+            return (
+              <MapMarker
+                key={kakaoId}
+                position={{
+                  lat: store.latitude ? parseFloat(store.latitude) : 0,
+                  lng: store.longitude ? parseFloat(store.longitude) : 0,
+                }}
+                image={{
+                  src:
+                    clickedIndex === kakaoId
+                      ? '/images/clicked-no-zero-marker.png'
+                      : '/images/no-zero-marker.png',
+                  size: {
+                    width: 28,
+                    height: 36,
+                  },
+                }}
+                title={store.name}
+                clickable={true}
+                onClick={() => onMarkerClick(kakaoId)}
+              />
+            );
+          })
         : null}
     </Map>
   );

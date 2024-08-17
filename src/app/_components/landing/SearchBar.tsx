@@ -18,7 +18,7 @@ export function SearchBar({ query, onChange, onSearch }: SearchBarProps) {
         className="w-full py-5 pl-4 pr-10 text-sm bg-white rounded-xl focus:outline-none focus:border-gray-400"
       />
       <SearchIcon
-        className="absolute right-5 bottom-4 flex items-center"
+        className="absolute right-5 bottom-4 flex items-center cursor-pointer"
         onClick={onSearch}
       />
     </div>
