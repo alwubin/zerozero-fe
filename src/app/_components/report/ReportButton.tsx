@@ -36,7 +36,7 @@ export const ReportButton: React.FC = () => {
   return (
     <button
       onClick={handleReport}
-      className="w-full mt-7 bg-[#CD5C5C] text-white py-4 rounded-lg shadow-sm font-semibold text-sm"
+      className="w-full mt-20 bg-[#CD5C5C] text-white py-4 rounded-lg shadow-sm font-semibold text-sm"
     >
       제보하기
     </button>
