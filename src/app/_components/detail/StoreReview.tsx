@@ -5,6 +5,7 @@ import { UserReview } from './UserReivew';
 import ReviewModal from './ReviewModal';
 import { FirstIcon, SecondIcon, ThirdIcon, Emoji } from '@/app/assets';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export const StoreReview = () => {
   const { reviews, zeroDrinks } = useSelectedStore();
@@ -60,12 +61,13 @@ export const StoreReview = () => {
           className="cursor-pointer fixed inset-0 z-50 w-full h-full flex items-end justify-center bg-black bg-opacity-50"
           onClick={() => handleModal()}
         >
-          <div
+          <motion.div
             className="w-full max-w-[480px] bg-white rounded-t-3xl"
-            onClick={(e) => e.stopPropagation()}
+            animate={isOpen ? { y: [100, 0] } : {}}
+            transition={{ duration: 0.5 }}
           >
             <ReviewModal onClose={handleModal} />
-          </div>
+          </motion.div>
         </div>
       )}
     </div>
