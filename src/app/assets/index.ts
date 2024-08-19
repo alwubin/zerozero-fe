@@ -16,10 +16,12 @@ export { default as ChatIcon } from './svgs/chat-icon.svg';
 export { default as MyPageIconActive } from './svgs/my-page-icon-active.svg';
 export { default as MyPageIcon } from './svgs/my-page-icon.svg';
 
-// review rank icons
+// review icons
 export { default as FirstIcon } from './svgs/first-icon.svg';
 export { default as SecondIcon } from './svgs/second-icon.svg';
 export { default as ThirdIcon } from './svgs/third-icon.svg';
+export { default as CloseButton } from './svgs/close-button.svg';
+export { default as Emoji } from './svgs/emoji.svg';
 
 // map markers
 export { default as ZeroMarkerActive } from './svgs/zero-marker-active.svg';

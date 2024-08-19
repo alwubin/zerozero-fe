@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React, { useRef, useState, useEffect } from 'react';
 import { StoreProps } from '@/app/(route)/landing/page';
 import { useSelectStore } from '@/app/store/reportStore';
 import { useSelectedStore } from '@/app/store/detailStore';
 import { useRouter } from 'next/navigation';
-import { getStoreInfo } from '@/app/api/detail';
 
 interface ListProps {
   storeList: StoreProps[];
@@ -67,7 +67,6 @@ const Carousel = ({ storeList, clickedIndex }: ListProps) => {
         });
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clickedIndex, storeList]);
 
   useEffect(() => {
