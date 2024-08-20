@@ -240,7 +240,7 @@ const ReviewModal = ({ onClose }: { onClose: () => void }) => {
         </div>
         <div className="w-full rounded-3xl h-24 bg-[#F2F4F6]">
           <textarea
-            className="w-full h-full placeholder:text-[10px] bg-transparent px-5 py-2 overflow-y-auto text-sm"
+            className="focus:outline-none w-full h-full placeholder:text-[10px] bg-transparent px-5 py-2 overflow-y-auto text-sm"
             placeholder="판매점에 대한 리뷰를 입력해주세요"
           />
         </div>

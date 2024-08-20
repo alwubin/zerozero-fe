@@ -65,6 +65,7 @@ export const StoreReview = () => {
             className="w-full max-w-[480px] bg-white rounded-t-3xl"
             animate={isOpen ? { y: [100, 0] } : {}}
             transition={{ duration: 0.5 }}
+            onClick={(e) => e.stopPropagation()}
           >
             <ReviewModal onClose={handleModal} />
           </motion.div>
