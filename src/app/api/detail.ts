@@ -1,5 +1,10 @@
 import { axiosInstance } from "./interceptor";
 
+interface ReviewProps {
+  content: string;
+  zeroDrinks: string[];
+}
+
 export const getStoreInfo = async (storeId: string, filter: string) => {
     try {
       const { data } = await axiosInstance.get('/store', {
@@ -20,3 +25,14 @@ export const getStoreInfo = async (storeId: string, filter: string) => {
       return null;
     }
   };
+
+  export const postReview = async (storeId: string, reviewContent:ReviewProps) => {
+    try {
+      const url = `/review?storeId=${storeId}`;
+      const { data } = await axiosInstance.post(url, reviewContent);
+  
+      return data.success;
+  } catch(error) {
+    console.error('리뷰 등록 실패', error);
+  }
+}

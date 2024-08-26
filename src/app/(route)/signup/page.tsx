@@ -1,5 +1,5 @@
 'use client';
-import { useSignupStore } from '@/app/store/signupStore';
+import { useSignupStore } from '@/app/zustand/signupStore';
 import BackButton from '@/app/_components/common/BackButton';
 import HeaderMessage from '@/app/_components/common/HeaderMessage';
 import NicknameInput from '@/app/_components/login/NicknameInput';

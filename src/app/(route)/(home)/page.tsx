@@ -1,16 +1,16 @@
-"use client";
-import AnimatedLogo from "./_components/home/AnimatedLogo";
-import { useRouter } from "next/navigation";
+'use client';
+import AnimatedLogo from '../../_components/home/AnimatedLogo';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.push("/login");
+    router.push('/login');
   };
 
   const handleSignup = () => {
-    router.push("/signup");
+    router.push('/signup');
   };
 
   return (
@@ -24,7 +24,7 @@ export default function Home() {
           시작하기
         </button>
         <div className="flex justify-center mt-14 mb-14 text-[#A5A5A5] font-bold">
-          이미 계정이 있나요?{" "}
+          이미 계정이 있나요?{' '}
           <button
             className="text-main ml-2 font-bold hover:cursor"
             onClick={handleLogin}

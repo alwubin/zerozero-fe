@@ -1,6 +1,6 @@
 'use client';
 import { PlusIcon } from '@/app/assets';
-import { useSelectStore } from '@/app/store/reportStore';
+import { useSelectStore } from '@/app/zustand/reportStore';
 import Image from 'next/image';
 
 const StoreImage = () => {

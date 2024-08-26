@@ -2,8 +2,8 @@
 'use client';
 import React, { useRef, useState, useEffect } from 'react';
 import { StoreProps } from '@/app/(route)/landing/page';
-import { useSelectStore } from '@/app/store/reportStore';
-import { useSelectedStore } from '@/app/store/detailStore';
+import { useSelectStore } from '@/app/zustand/reportStore';
+import { useSelectedStore } from '@/app/zustand/detailStore';
 import { useRouter } from 'next/navigation';
 
 interface ListProps {
@@ -15,6 +15,7 @@ const Carousel = ({ storeList, clickedIndex }: ListProps) => {
   const router = useRouter();
   const {
     id,
+    status,
     setId,
     setPlaceName,
     setPhone,
@@ -156,7 +157,11 @@ const Carousel = ({ storeList, clickedIndex }: ListProps) => {
                     {store.address}
                   </p>
                   <button
-                    onClick={() => router.push('/detail')}
+                    onClick={() => {
+                      status
+                        ? router.push(`/store/${id}`)
+                        : router.push('/store');
+                    }}
                     className="mt-9 px-5 py-2 text-[10px] text-white bg-main rounded-xl font-semibold"
                   >
                     더보기

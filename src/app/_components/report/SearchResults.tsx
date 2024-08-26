@@ -2,7 +2,7 @@
 import React from 'react';
 import { SearchResultItem } from './SearchResultItem';
 import { SearchResult } from './SearchBar';
-import { useSelectStore } from '@/app/store/reportStore';
+import { useSelectStore } from '@/app/zustand/reportStore';
 
 interface SearchResultsProps {
   results: SearchResult[];

@@ -11,7 +11,7 @@ import {
   MyPageIcon,
   MyPageIconActive,
 } from '../assets';
-import Home from '../page';
+import Home from '../(route)/(home)/page';
 
 export const Navbar = () => {
   const pathname = usePathname();

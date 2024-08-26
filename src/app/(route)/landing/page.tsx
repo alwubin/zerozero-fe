@@ -3,7 +3,7 @@ import { useEffect, useState, ChangeEvent } from 'react';
 import { Navbar } from '@/app/_components/Navbar';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { searchStore } from '@/app/api/landing';
-import { useLandingStore } from '@/app/store/landingStore';
+import { useLandingStore } from '@/app/zustand/landingStore';
 import { SearchBar } from '@/app/_components/landing/SearchBar';
 import { KakaoMap } from '@/app/_components/landing/KakaoMap';
 import { StoreCarousel } from '@/app/_components/landing/StoreCarousel';

@@ -1,7 +1,7 @@
-"use client";
-import React, { ChangeEvent } from "react";
-import { motion } from "framer-motion";
-import { useSignupStore } from "@/app/store/signupStore";
+'use client';
+import React, { ChangeEvent } from 'react';
+import { motion } from 'framer-motion';
+import { useSignupStore } from '@/app/zustand/signupStore';
 
 interface NicknameInputProps {
   onShake: boolean;

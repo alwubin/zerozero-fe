@@ -1,5 +1,5 @@
 'use client';
-import { useSelectStore } from '@/app/store/reportStore';
+import { useSelectStore } from '@/app/zustand/reportStore';
 import { Marker, Phone, Category } from '@/app/assets';
 
 export const StoreInfo = () => {

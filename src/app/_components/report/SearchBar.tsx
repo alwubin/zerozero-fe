@@ -2,7 +2,7 @@
 import React from 'react';
 import { SearchIcon } from '@/app/assets';
 import { searchStore } from '@/app/api/report';
-import { useSearchStore, useSelectStore } from '@/app/store/reportStore';
+import { useSearchStore, useSelectStore } from '@/app/zustand/reportStore';
 
 export interface SearchResult {
   id?: string;
