@@ -1,7 +1,7 @@
 import React from 'react';
 import { SearchResult } from './SearchBar';
 import { ZeroIcon, NoZeroIcon } from '@/app/assets';
-import { useSelectStore, useSearchStore } from '@/app/store/reportStore'; // 상태 가져오기
+import { useSelectStore, useSearchStore } from '@/app/zustand/reportStore'; // 상태 가져오기
 
 interface SearchResultItemProps extends SearchResult {
   onClick?: () => void;

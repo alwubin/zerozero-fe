@@ -1,5 +1,5 @@
 'use client';
-import { useLoginStore } from '@/app/store/loginStore';
+import { useLoginStore } from '@/app/zustand/loginStore';
 import EmailInput from '../../_components/login/EmailInput';
 import PasswordInput from '../../_components/login/PasswordInput';
 import BackButton from '@/app/_components/common/BackButton';

@@ -1,5 +1,5 @@
 'use client';
-import { useSelectedStore } from '@/app/store/detailStore';
+import { useSelectedStore } from '@/app/zustand/detailStore';
 import Image from 'next/image';
 import { useEffect } from 'react';
 

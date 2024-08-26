@@ -2,8 +2,8 @@
 'use client';
 import React, { useRef, useState, useEffect } from 'react';
 import { StoreProps } from '@/app/(route)/landing/page';
-import { useSelectStore } from '@/app/store/reportStore';
-import { useSelectedStore } from '@/app/store/detailStore';
+import { useSelectStore } from '@/app/zustand/reportStore';
+import { useSelectedStore } from '@/app/zustand/detailStore';
 import { useRouter } from 'next/navigation';
 
 interface ListProps {

@@ -1,5 +1,5 @@
 'use client';
-import { useSelectedStore } from '@/app/store/detailStore';
+import { useSelectedStore } from '@/app/zustand/detailStore';
 import Image from 'next/image';
 import { UserReview } from './UserReivew';
 import ReviewModal from './ReviewModal';
@@ -29,14 +29,14 @@ export const StoreReview = () => {
 
       <div className="flex flex-row justify-center space-x-10">
         {zeroDrinks.length > 0 &&
-          zeroDrinks[0].map((drink, i) => (
+          zeroDrinks.map((drink, i) => (
             <div className="flex flex-row space-x-3" key={i}>
               {i === 0 && <FirstIcon />}
               {i === 1 && <SecondIcon />}
               {i === 2 && <ThirdIcon />}
               <Image
-                src={`/images/${drink.type}.png`}
-                alt={`${drink.type}-icon`}
+                src={`/images/${drink}.png`}
+                alt={`${drink}-icon`}
                 width={201}
                 height={378}
                 className="w-7"
@@ -47,7 +47,13 @@ export const StoreReview = () => {
 
       <div className="mt-7 space-y-4">
         {reviews.length > 0 ? (
-          reviews.map((review, i) => <UserReview key={i} review={review} />)
+          reviews.map((reviewData, i) => (
+            <UserReview
+              key={i}
+              review={reviewData.review}
+              user={reviewData.user}
+            />
+          ))
         ) : (
           <div className="text-xs text-[#A5A5A5] space-y-3 pt-10 flex flex-col justify-center items-center">
             <Emoji />

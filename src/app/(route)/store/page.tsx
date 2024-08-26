@@ -5,8 +5,8 @@ import { DetailHeader } from '@/app/_components/store/DetailHeader';
 import { StoreInfo } from '@/app/_components/store/StoreInfo';
 import StoreImage from '@/app/_components/report/StoreImages';
 import { ReportButton } from '@/app/_components/report/ReportButton';
-import { useSelectedStore } from '@/app/store/detailStore';
-import { useSelectStore } from '@/app/store/reportStore';
+import { useSelectedStore } from '@/app/zustand/detailStore';
+import { useSelectStore } from '@/app/zustand/reportStore';
 import { getStoreInfo } from '@/app/api/detail';
 
 export default function Detail() {

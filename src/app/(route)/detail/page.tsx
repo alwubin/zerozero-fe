@@ -7,8 +7,8 @@ import { RegisteredStoreImage } from '@/app/_components/store/RegisteredStoreIma
 import StoreImage from '@/app/_components/report/StoreImages';
 import { StoreReview } from '@/app/_components/store/StoreReview';
 import { ReportButton } from '@/app/_components/report/ReportButton';
-import { useSelectedStore } from '@/app/store/detailStore';
-import { useSelectStore } from '@/app/store/reportStore';
+import { useSelectedStore } from '@/app/zustand/detailStore';
+import { useSelectStore } from '@/app/zustand/reportStore';
 import { getStoreInfo } from '@/app/api/detail';
 
 export default function Detail() {

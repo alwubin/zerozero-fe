@@ -10,37 +10,42 @@ interface ReviewUser {
 }
 
 interface Review {
-  review: string;
-  user: ReviewUser;
+  id: string;
+  content: string;
+  zeroDrinks: string[];
+  userId: string;
+  createdAt: string;
 }
 
 interface UserReviewProps {
   review: Review;
+  user: ReviewUser;
 }
 
-export const UserReview: React.FC<UserReviewProps> = ({ review }) => {
+export const UserReview = ({ review, user }: UserReviewProps) => {
   return (
     <div className="bg-point w-full p-4 rounded-2xl flex flex-col space-y-1">
-      <div className="font-bold text-xs">{review.user.nickname}</div>
-
-      <div className="flex flex-row space-x-1">
-        <Image
-          src={review.user.profileImage.url}
-          alt={`${review.user.nickname}-profile`}
-          width={201}
-          height={378}
-          className="w-2 rounded-full"
-        />
-        <Image
-          src="/images/CHILSUNG_CIDER_ZERO.png"
-          alt="related-image"
-          width={201}
-          height={378}
-          className="w-2"
-        />
+      <div className="flex items-center justify-between">
+        <div className="font-bold text-xs">{user.nickname}</div>
+        <div className="text-[#A5A5A5] text-xs font-light">
+          {review.createdAt}
+        </div>
       </div>
 
-      <div className="text-xs">{review.review}</div>
+      <div className="flex flex-row space-x-2">
+        {review.zeroDrinks.map((drink, index) => (
+          <Image
+            key={index}
+            src={`/images/${drink}.png`}
+            alt={`${drink}-icon`}
+            width={40}
+            height={40}
+            className="rounded w-3"
+          />
+        ))}
+      </div>
+
+      <div className="text-xs mb-2">{review.content}</div>
     </div>
   );
 };

@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { registerStore } from '@/app/api/report';
-import { useSelectStore, useSearchStore } from '@/app/store/reportStore';
-import { useLandingStore } from '@/app/store/landingStore';
+import { useSelectStore, useSearchStore } from '@/app/zustand/reportStore';
+import { useLandingStore } from '@/app/zustand/landingStore';
 
 import { useRouter } from 'next/navigation';
 

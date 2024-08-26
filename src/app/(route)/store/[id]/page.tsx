@@ -5,8 +5,8 @@ import { DetailHeader } from '@/app/_components/store/DetailHeader';
 import { StoreInfo } from '@/app/_components/store/StoreInfo';
 import { RegisteredStoreImage } from '@/app/_components/store/RegisteredStoreImage';
 import { StoreReview } from '@/app/_components/store/StoreReview';
-import { useSelectedStore } from '@/app/store/detailStore';
-import { useSelectStore } from '@/app/store/reportStore';
+import { useSelectedStore } from '@/app/zustand/detailStore';
+import { useSelectStore } from '@/app/zustand/reportStore';
 import { getStoreInfo } from '@/app/api/detail';
 
 export default function RegisteredStore() {

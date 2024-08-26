@@ -1,18 +1,39 @@
 'use client';
-import { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { CloseButton } from '@/app/assets';
 import Image from 'next/image';
+import { postReview } from '@/app/api/detail';
+import { useSelectStore } from '@/app/zustand/reportStore';
 
 const ReviewModal = ({ onClose }: { onClose: () => void }) => {
   const [clickedImages, setClickedImages] = useState<string[]>([]);
+  const [review, setReview] = useState<string>('');
+  const { id } = useSelectStore();
 
   const handleImageClick = (imageAlt: string) => {
-    setClickedImages((prevClickedImages) => {
-      if (prevClickedImages.includes(imageAlt)) {
-        return prevClickedImages.filter((alt) => alt !== imageAlt);
-      }
-      return [...prevClickedImages, imageAlt];
-    });
+    setClickedImages((prevClickedImages) =>
+      prevClickedImages.includes(imageAlt)
+        ? prevClickedImages.filter((alt) => alt !== imageAlt)
+        : [...prevClickedImages, imageAlt],
+    );
+  };
+
+  const handleReview = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setReview(e.target.value);
+  };
+
+  const fetchReview = async () => {
+    try {
+      const result = await postReview(id, {
+        content: review,
+        zeroDrinks: clickedImages,
+      });
+      console.log('Review submission result:', result);
+    } catch (error) {
+      console.error('리뷰 실패', error);
+      console.log('Review content:', review);
+      console.log('Clicked images:', clickedImages);
+    }
   };
 
   return (
@@ -242,11 +263,16 @@ const ReviewModal = ({ onClose }: { onClose: () => void }) => {
           <textarea
             className="focus:outline-none w-full h-full placeholder:text-[10px] bg-transparent px-5 py-2 overflow-y-auto text-sm"
             placeholder="판매점에 대한 리뷰를 입력해주세요"
+            value={review}
+            onChange={handleReview}
           />
         </div>
       </div>
 
-      <button className="py-3.5 rounded-2xl px-36 bg-main text-white text-xs font-bold">
+      <button
+        className="py-3.5 rounded-2xl px-36 bg-main text-white text-xs font-bold"
+        onClick={fetchReview}
+      >
         리뷰 쓰기
       </button>
     </div>
