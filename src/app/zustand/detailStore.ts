@@ -1,4 +1,5 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface Image {
   url: string;
@@ -21,10 +22,12 @@ interface ZeroDrink {
 }
 
 interface SelectedStoreState {
+  storeId: string;
   filter: 'RECENT' | 'RECOMMEND'; 
   images: Image[];
   reviews: Review[];
   zeroDrinks: ZeroDrink[][];
+  setStoreId: (storeId: string) => void;
   setFilter: (filter: 'RECENT' | 'RECOMMEND') => void; 
   setImages: (images: Image[]) => void;
   setReviews: (reviews: Review[]) => void;
@@ -33,10 +36,15 @@ interface SelectedStoreState {
 }
   
 export const useSelectedStore = create<SelectedStoreState>((set) => ({
+  storeId: localStorage.getItem('storeId') || '',
   filter: 'RECENT',  
   images: [],
   reviews: [],
   zeroDrinks: [[]],
+  setStoreId: (storeId) => {
+    set({ storeId });
+    localStorage.setItem('storeId', storeId); 
+  },
   setFilter: (filter) => set({ filter }), 
   setImages: (images) => set({ images }),
   setReviews: (reviews) => set({ reviews }),

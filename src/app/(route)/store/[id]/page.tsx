@@ -11,12 +11,14 @@ import { getStoreInfo } from '@/app/api/detail';
 
 export default function RegisteredStore() {
   const { status, id } = useSelectStore();
-  const { setImages, setReviews, setZeroDrinks, filter } = useSelectedStore();
+  const { setStoreId, setImages, setReviews, setZeroDrinks, storeId, filter } =
+    useSelectedStore();
 
-  const fetchStoreInfo = async () => {
+  const fetchStoreInfo = async (value: string) => {
     try {
-      const storeInfo = await getStoreInfo(id, filter);
+      const storeInfo = await getStoreInfo(value, filter);
       if (storeInfo) {
+        setStoreId(storeInfo.store.id || '');
         setImages(storeInfo.store.images || []);
         setReviews(storeInfo.reviews || []);
         setZeroDrinks(storeInfo.zeroDrinks || [[]]);
@@ -28,11 +30,16 @@ export default function RegisteredStore() {
   };
 
   useEffect(() => {
-    if (status && id) {
-      fetchStoreInfo();
+    console.log('Status:', status);
+    console.log('ID:', id);
+    console.log('Store ID:', storeId);
+    console.log('Filter:', filter);
+    if (status !== null && id !== null) {
+      fetchStoreInfo(id);
+    } else {
+      fetchStoreInfo(storeId);
     }
   }, []);
-
   return (
     <div className="flex min-h-screen flex-col bg-[#F2F4F6]">
       <DetailHeader />

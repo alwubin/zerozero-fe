@@ -6,10 +6,6 @@ import { useEffect } from 'react';
 export const RegisteredStoreImage = () => {
   const { images } = useSelectedStore();
 
-  useEffect(() => {
-    console.log(images);
-  }, []);
-
   return (
     <div className="w-10/12 bg-white p-6 rounded-2xl space-y-4 mt-7 ml-10">
       <div className="font-semibold text-sm text-left">가게 사진</div>
