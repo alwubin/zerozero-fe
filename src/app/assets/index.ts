@@ -23,6 +23,8 @@ export { default as ThirdIcon } from './svgs/third-icon.svg';
 export { default as CloseButton } from './svgs/close-button.svg';
 export { default as Emoji } from './svgs/emoji.svg';
 export { default as UnrankedDrink } from './svgs/unranked-drink.svg';
+export { default as LikeButton } from './svgs/like-button.svg';
+export { default as LikedButton } from './svgs/liked-button.svg';
 
 // map markers
 export { default as ZeroMarkerActive } from './svgs/zero-marker-active.svg';

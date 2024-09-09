@@ -36,3 +36,12 @@ export const getStoreInfo = async (storeId: string, filter: string) => {
     console.error('리뷰 등록 실패', error);
   }
 }
+
+export const patchReviewLike = async (reviewId: string) => {
+  try {
+    const { data } = await axiosInstance.patch(`/review/like/${reviewId}`);
+    return data;
+  } catch(error) {
+    console.error('리뷰 좋아요 실패:', error);
+  }
+}

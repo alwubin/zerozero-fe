@@ -13,8 +13,19 @@ interface ReviewUser {
 }
 
 interface Review {
-  review: string;
+  id: string;
+  content: string;
+  zeroDrinks: string[];
+  userId: string;
+  createdAt: string;
+}
+
+
+interface ReviewData {
+  review: Review;
   user: ReviewUser;
+  likeCount: number;
+  isLiked: boolean;
 }
 
 interface ZeroDrink {
@@ -25,12 +36,12 @@ interface SelectedStoreState {
   storeId: string;
   filter: 'RECENT' | 'RECOMMEND'; 
   images: Image[];
-  reviews: Review[];
+  reviews: ReviewData[];
   zeroDrinks: ZeroDrink[][];
   setStoreId: (storeId: string) => void;
   setFilter: (filter: 'RECENT' | 'RECOMMEND') => void; 
   setImages: (images: Image[]) => void;
-  setReviews: (reviews: Review[]) => void;
+  setReviews: (reviews: ReviewData[]) => void;
   setZeroDrinks: (zeroDrinks: ZeroDrink[][]) => void;
   resetSelectedStore: () => void; 
 }
