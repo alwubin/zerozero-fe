@@ -10,17 +10,55 @@ import {
   Emoji,
   UnrankedDrink,
 } from '@/app/assets';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { getStoreInfo } from '@/app/api/detail';
 
 export const StoreReview = () => {
-  const { reviews, zeroDrinks } = useSelectedStore();
+  const {
+    reviews,
+    zeroDrinks,
+    filter,
+    setFilter,
+    storeId,
+    setStoreId,
+    setImages,
+    setReviews,
+    setZeroDrinks,
+  } = useSelectedStore();
   const [isOpen, setIsOpen] = useState(false);
   const maxRank = 3;
 
   const handleModal = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleSort = (sortType: 'RECENT' | 'RECOMMEND') => {
+    setFilter(sortType);
+  };
+
+  const fetchStoreInfo = useCallback(
+    async (storeId: string, filter: 'RECENT' | 'RECOMMEND') => {
+      try {
+        const storeInfo = await getStoreInfo(storeId, filter);
+        if (storeInfo) {
+          setStoreId(storeInfo.store.id || '');
+          setImages(storeInfo.store.images || []);
+          setReviews(storeInfo.reviews || []);
+          setZeroDrinks(storeInfo.zeroDrinks || [[]]);
+        }
+      } catch (error) {
+        console.error('판매점 조회 오류', error);
+      }
+    },
+    [setStoreId, setImages, setReviews, setZeroDrinks],
+  );
+
+  useEffect(() => {
+    if (storeId) {
+      fetchStoreInfo(storeId, filter);
+    }
+  }, [filter, storeId, fetchStoreInfo]);
 
   return (
     <div className="w-10/12 bg-white p-6 rounded-2xl mt-7 ml-10 h-96 overflow-scroll mb-7">
@@ -60,8 +98,35 @@ export const StoreReview = () => {
           </div>
         ))}
       </div>
+      <div className="flex items-center justify-end mt-4 mr-2 space-x-[2px] text-[10px]">
+        {reviews.length > 0 ? (
+          <>
+            <button
+              onClick={() => handleSort('RECENT')}
+              className={`${
+                filter === 'RECENT'
+                  ? 'font-medium text-[#E2A0A1]'
+                  : 'font-extralight text-[#A5A5A5]'
+              }`}
+            >
+              최신순
+            </button>
+            <div className="h-[9px] border-r border-[#CBCBCB]" />
+            <button
+              onClick={() => handleSort('RECOMMEND')}
+              className={`${
+                filter === 'RECOMMEND'
+                  ? 'font-medium text-[#E2A0A1]'
+                  : 'font-extralight text-[#A5A5A5]'
+              }`}
+            >
+              추천순
+            </button>
+          </>
+        ) : null}
+      </div>
 
-      <div className="mt-7 space-y-4">
+      <div className="mt-2 space-y-4">
         {reviews.length > 0 ? (
           reviews.map((reviewData, i) => (
             <UserReview

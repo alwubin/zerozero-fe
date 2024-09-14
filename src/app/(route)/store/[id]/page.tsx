@@ -11,8 +11,15 @@ import { getStoreInfo } from '@/app/api/detail';
 
 export default function RegisteredStore() {
   const { status, id } = useSelectStore();
-  const { setStoreId, setImages, setReviews, setZeroDrinks, storeId, filter } =
-    useSelectedStore();
+  const {
+    setStoreId,
+    setImages,
+    setReviews,
+    setZeroDrinks,
+    setFilter,
+    storeId,
+    filter,
+  } = useSelectedStore();
 
   const fetchStoreInfo = async (value: string) => {
     try {
