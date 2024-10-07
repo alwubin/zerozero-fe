@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { StoreProps } from '@/app/(route)/landing/page';
-import { parseCookies } from 'nookies'; // 쿠키에서 토큰을 가져오기 위해 추가
+import { parseCookies } from 'nookies';
 
 interface KakaoMapProps {
   center: { lat: number; lng: number };
-  storeList: StoreProps[] | null;
+  searchStoreList: StoreProps[] | null;
   clickedIndex: string | null;
   onMarkerClick: (id: string | null) => void;
 }
 
 export function KakaoMap({
   center,
-  storeList,
+  searchStoreList,
   clickedIndex,
   onMarkerClick,
 }: KakaoMapProps) {
-  const [updatedStoreList, setUpdatedStoreList] = useState<StoreProps[] | null>(
-    storeList,
+  const [nearbyStoreList, setNearbyStoreList] = useState<StoreProps[] | null>(
+    [],
   );
 
   useEffect(() => {
@@ -44,9 +44,8 @@ export function KakaoMap({
 
     socket.onmessage = (event) => {
       try {
-        const updatedStores: StoreProps[] = JSON.parse(event.data);
-        console.log(updatedStores);
-        setUpdatedStoreList(updatedStores);
+        const storeList = JSON.parse(event.data);
+        setNearbyStoreList(storeList.stores);
       } catch (err) {
         console.error('웹소켓 메시지 처리 중 오류:', err);
       }
@@ -65,6 +64,10 @@ export function KakaoMap({
     };
   }, []);
 
+  useEffect(() => {
+    console.log('Updated nearbyStoreList:', nearbyStoreList);
+  }, [nearbyStoreList]);
+
   return (
     <Map
       center={center}
@@ -74,8 +77,39 @@ export function KakaoMap({
       }}
       level={5}
     >
-      {storeList
-        ? storeList.map((store) => {
+      {searchStoreList
+        ? searchStoreList.map((store) => {
+            const kakaoId = store.kakaoId || null;
+
+            return (
+              <MapMarker
+                key={kakaoId}
+                position={{
+                  lat: store.latitude ? parseFloat(store.latitude) : 0,
+                  lng: store.longitude ? parseFloat(store.longitude) : 0,
+                }}
+                image={{
+                  src:
+                    clickedIndex === kakaoId
+                      ? store.status
+                        ? '/images/clicked-yes-zero-marker.png'
+                        : '/images/clicked-no-zero-marker.png'
+                      : store.status
+                      ? '/images/yes-zero-marker.png'
+                      : '/images/no-zero-marker.png',
+                  size: {
+                    width: 28,
+                    height: 36,
+                  },
+                }}
+                title={store.name}
+                clickable={true}
+                onClick={() => onMarkerClick(kakaoId)}
+              />
+            );
+          })
+        : nearbyStoreList
+        ? nearbyStoreList.map((store) => {
             const kakaoId = store.kakaoId || null;
 
             return (

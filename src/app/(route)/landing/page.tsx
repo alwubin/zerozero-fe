@@ -31,7 +31,9 @@ export interface StoreProps {
 
 export default function Main() {
   const [clickedIndex, setClickedIndex] = useState<string | null>(null);
-  const [storeList, setStoreList] = useState<StoreProps[] | null>(null);
+  const [searchStoreList, setSearchStoreList] = useState<StoreProps[] | null>(
+    null,
+  );
   const { latitude, longitude, query, setLatitude, setLongitude, setQuery } =
     useLandingStore();
 
@@ -42,7 +44,7 @@ export default function Main() {
   const fetchStoreList = async () => {
     const storeList = await searchStore(query, longitude, latitude);
     if (storeList) {
-      setStoreList(storeList);
+      setSearchStoreList(storeList);
     }
   };
 
@@ -52,7 +54,7 @@ export default function Main() {
   });
 
   const [state, setState] = useState<State>({
-    center: { lat: 33.450701, lng: 126.570667 },
+    center: { lat: 37.5666805, lng: 126.9784147 },
     errMsg: null,
     isLoading: true,
   });
@@ -104,13 +106,16 @@ export default function Main() {
 
       <KakaoMap
         center={state.center}
-        storeList={storeList}
+        searchStoreList={searchStoreList}
         clickedIndex={clickedIndex}
         onMarkerClick={setClickedIndex}
       />
 
-      {storeList && clickedIndex && (
-        <StoreCarousel storeList={storeList} clickedIndex={clickedIndex} />
+      {searchStoreList && clickedIndex && (
+        <StoreCarousel
+          storeList={searchStoreList}
+          clickedIndex={clickedIndex}
+        />
       )}
 
       <div className="mt-auto">
