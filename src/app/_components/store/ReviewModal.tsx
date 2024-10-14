@@ -88,15 +88,15 @@ const ReviewModal = ({ onClose }: { onClose: () => void }) => {
             />
             <Image
               src="/images/COCA_COLA_ZERO.png"
-              alt="COKA_COLA_ZERO"
+              alt="COCA_COLA_ZERO"
               width={30.31}
               height={57}
               className={`cursor-pointer ${
-                clickedImages.includes('COKA_COLA_ZERO')
+                clickedImages.includes('COCA_COLA_ZERO')
                   ? 'contrast-100'
                   : 'contrast-50'
               } hover:contrast-100`}
-              onClick={() => handleImageClick('COKA_COLA_ZERO')}
+              onClick={() => handleImageClick('COCA_COLA_ZERO')}
             />
             <Image
               src="/images/DR_PEPPER_ZERO.png"
