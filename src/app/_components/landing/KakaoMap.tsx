@@ -24,7 +24,7 @@ export function KakaoMap({
     const cookies = parseCookies();
     const accessToken = cookies.accessToken;
 
-    const socket = new WebSocket('ws://3.37.245.108:8080/ws/store');
+    const socket = new WebSocket(`${process.env.NEXT_PUBLIC_WEBSOKET_URL}`);
 
     socket.onopen = () => {
       console.log('WebSocket 연결됨');
