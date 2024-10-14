@@ -54,7 +54,10 @@ export default function Main() {
   });
 
   const [state, setState] = useState<State>({
-    center: { lat: 37.5666805, lng: 126.9784147 },
+    center: {
+      lat: Number(localStorage.getItem(latitude)) || 37.5666805,
+      lng: Number(localStorage.getItem(longitude)) || 126.9784147,
+    },
     errMsg: null,
     isLoading: true,
   });

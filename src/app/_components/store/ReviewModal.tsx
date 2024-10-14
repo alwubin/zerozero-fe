@@ -28,9 +28,11 @@ const ReviewModal = ({ onClose }: { onClose: () => void }) => {
         content: review,
         zeroDrinks: clickedImages,
       });
-      console.log('Review submission result:', result);
+      alert('리뷰 등록 완료!');
+      window.location.reload();
     } catch (error) {
       console.error('리뷰 실패', error);
+      alert('리뷰 등록 중 오류가 발생했습니다. 다시 시도해주세요.');
       console.log('Review content:', review);
       console.log('Clicked images:', clickedImages);
     }

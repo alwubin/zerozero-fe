@@ -41,11 +41,7 @@ export default function RegisteredStore() {
     console.log('ID:', id);
     console.log('Store ID:', storeId);
     console.log('Filter:', filter);
-    if (status !== null && id !== null) {
-      fetchStoreInfo(id);
-    } else {
-      fetchStoreInfo(storeId);
-    }
+    fetchStoreInfo(id);
   }, []);
   return (
     <div className="flex min-h-screen flex-col bg-[#F2F4F6]">
