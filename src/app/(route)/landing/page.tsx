@@ -55,8 +55,12 @@ export default function Main() {
 
   const [state, setState] = useState<State>({
     center: {
-      lat: Number(localStorage.getItem(latitude)) || 37.5666805,
-      lng: Number(localStorage.getItem(longitude)) || 126.9784147,
+      lat: localStorage.getItem(latitude)
+        ? Number(localStorage.getItem(latitude))
+        : 37.5666805,
+      lng: localStorage.getItem(longitude)
+        ? Number(localStorage.getItem(longitude))
+        : 126.9784147,
     },
     errMsg: null,
     isLoading: true,
