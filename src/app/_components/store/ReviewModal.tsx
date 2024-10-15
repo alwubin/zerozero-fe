@@ -28,9 +28,11 @@ const ReviewModal = ({ onClose }: { onClose: () => void }) => {
         content: review,
         zeroDrinks: clickedImages,
       });
-      console.log('Review submission result:', result);
+      alert('리뷰 등록 완료!');
+      window.location.reload();
     } catch (error) {
       console.error('리뷰 실패', error);
+      alert('리뷰 등록 중 오류가 발생했습니다. 다시 시도해주세요.');
       console.log('Review content:', review);
       console.log('Clicked images:', clickedImages);
     }
@@ -88,15 +90,15 @@ const ReviewModal = ({ onClose }: { onClose: () => void }) => {
             />
             <Image
               src="/images/COCA_COLA_ZERO.png"
-              alt="COKA_COLA_ZERO"
+              alt="COCA_COLA_ZERO"
               width={30.31}
               height={57}
               className={`cursor-pointer ${
-                clickedImages.includes('COKA_COLA_ZERO')
+                clickedImages.includes('COCA_COLA_ZERO')
                   ? 'contrast-100'
                   : 'contrast-50'
               } hover:contrast-100`}
-              onClick={() => handleImageClick('COKA_COLA_ZERO')}
+              onClick={() => handleImageClick('COCA_COLA_ZERO')}
             />
             <Image
               src="/images/DR_PEPPER_ZERO.png"
