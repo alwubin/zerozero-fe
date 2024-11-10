@@ -5,6 +5,7 @@ export { default as BookmarkIconActive } from './svgs/bookmark-icon-active.svg';
 export { default as EditIcon } from './svgs/edit-icon.svg';
 export { default as UserIcon } from './svgs/user-icon.svg';
 export { default as SearchIcon } from './svgs/search-icon.svg';
+export { default as RefreshButton } from './svgs/refresh-button.svg';
 
 // footer icons
 export { default as HomeIconActive } from './svgs/home-icon-active.svg';
