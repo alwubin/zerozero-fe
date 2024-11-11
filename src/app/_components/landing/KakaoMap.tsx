@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { StoreProps } from '@/app/(route)/landing/page';
@@ -7,6 +8,8 @@ interface KakaoMapProps {
   center: { lat: number; lng: number };
   searchStoreList: StoreProps[] | null;
   clickedIndex: string | null;
+  nearbyStoreList: StoreProps[] | null;
+  setNearbyStoreList: (storeList: StoreProps[]) => void;
   onMarkerClick: (id: string | null) => void;
 }
 
@@ -14,12 +17,10 @@ export function KakaoMap({
   center,
   searchStoreList,
   clickedIndex,
+  nearbyStoreList,
+  setNearbyStoreList,
   onMarkerClick,
 }: KakaoMapProps) {
-  const [nearbyStoreList, setNearbyStoreList] = useState<StoreProps[] | null>(
-    [],
-  );
-
   useEffect(() => {
     const cookies = parseCookies();
     const accessToken = cookies.accessToken;
@@ -64,9 +65,9 @@ export function KakaoMap({
     };
   }, []);
 
-  useEffect(() => {
-    console.log('Updated nearbyStoreList:', nearbyStoreList);
-  }, [nearbyStoreList]);
+  // useEffect(() => {
+  //   console.log('Updated nearbyStoreList:', nearbyStoreList);
+  // }, [nearbyStoreList]);
 
   return (
     <Map
@@ -75,12 +76,11 @@ export function KakaoMap({
         width: '100%',
         height: '100%',
       }}
-      level={5}
+      level={4}
     >
       {searchStoreList
         ? searchStoreList.map((store) => {
             const kakaoId = store.kakaoId || null;
-
             return (
               <MapMarker
                 key={kakaoId}
@@ -108,10 +108,9 @@ export function KakaoMap({
               />
             );
           })
-        : nearbyStoreList
-        ? nearbyStoreList.map((store) => {
+        : nearbyStoreList &&
+          nearbyStoreList.map((store) => {
             const kakaoId = store.kakaoId || null;
-
             return (
               <MapMarker
                 key={kakaoId}
@@ -122,12 +121,8 @@ export function KakaoMap({
                 image={{
                   src:
                     clickedIndex === kakaoId
-                      ? store.status
-                        ? '/images/clicked-yes-zero-marker.png'
-                        : '/images/clicked-no-zero-marker.png'
-                      : store.status
-                      ? '/images/yes-zero-marker.png'
-                      : '/images/no-zero-marker.png',
+                      ? '/images/clicked-yes-zero-marker.png'
+                      : '/images/yes-zero-marker.png',
                   size: {
                     width: 28,
                     height: 36,
@@ -138,8 +133,7 @@ export function KakaoMap({
                 onClick={() => onMarkerClick(kakaoId)}
               />
             );
-          })
-        : null}
+          })}
     </Map>
   );
 }

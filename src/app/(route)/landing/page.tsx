@@ -34,6 +34,9 @@ export default function Main() {
   const [searchStoreList, setSearchStoreList] = useState<StoreProps[] | null>(
     null,
   );
+  const [nearbyStoreList, setNearbyStoreList] = useState<StoreProps[] | null>(
+    [],
+  );
   const { latitude, longitude, query, setLatitude, setLongitude, setQuery } =
     useLandingStore();
 
@@ -116,11 +119,18 @@ export default function Main() {
         searchStoreList={searchStoreList}
         clickedIndex={clickedIndex}
         onMarkerClick={setClickedIndex}
+        nearbyStoreList={nearbyStoreList}
+        setNearbyStoreList={setNearbyStoreList}
       />
 
-      {searchStoreList && clickedIndex && (
+      {clickedIndex && (
         <StoreCarousel
-          storeList={searchStoreList}
+          storeList={
+            searchStoreList &&
+            searchStoreList.find((store) => store.kakaoId === clickedIndex)
+              ? searchStoreList
+              : nearbyStoreList || []
+          }
           clickedIndex={clickedIndex}
         />
       )}
