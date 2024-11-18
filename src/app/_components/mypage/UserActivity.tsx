@@ -64,10 +64,10 @@ export const UserActivity = ({ rank, storeReportCount }: ActivityItem) => {
           <div className="text-xs">제보한 판매점</div>
         </div>
 
-        <div className="flex-1 bg-white rounded-2xl py-3 mx-1 text-center cursor-pointer">
+        {/* <div className="flex-1 bg-white rounded-2xl py-3 mx-1 text-center cursor-pointer">
           <div className="text-2xl font-bold mb-1">0</div>
           <div className="text-xs">저장한 판매점</div>
-        </div>
+        </div> */}
       </div>
 
       {selectedItem !== null && reportItemList ? (
