@@ -1,6 +1,6 @@
-"use client";
-import React, { useState, ChangeEvent } from "react";
-import { motion } from "framer-motion";
+'use client';
+import React, { useState, ChangeEvent } from 'react';
+import { motion } from 'framer-motion';
 
 interface EmailInputProps {
   className?: string;
@@ -9,12 +9,12 @@ interface EmailInputProps {
 }
 
 function EmailInput({
-  className = "ml-9 mt-32 w-full",
+  className = 'ml-9 mt-32 w-full',
   setEmail,
   onShake,
 }: EmailInputProps) {
-  const [emailId, setEmailId] = useState("");
-  const [domain, setDomain] = useState("naver.com");
+  const [emailId, setEmailId] = useState('');
+  const [domain, setDomain] = useState('naver.com');
   const [isCustomDomain, setIsCustomDomain] = useState(false);
 
   React.useEffect(() => {
@@ -27,9 +27,9 @@ function EmailInput({
 
   const handleDomainChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedDomain = e.target.value;
-    if (selectedDomain === "custom") {
+    if (selectedDomain === 'custom') {
       setIsCustomDomain(true);
-      setDomain("");
+      setDomain('');
     } else {
       setIsCustomDomain(false);
       setDomain(selectedDomain);
@@ -47,9 +47,9 @@ function EmailInput({
       animate={{ opacity: 1 }}
       transition={{ delay: 0.3, duration: 0.5 }}
     >
-      <div className="text-[#A5A5A5] font-light text-sm">이메일</div>
+      <div className="text-[#A5A5A5] w-full font-light text-sm">이메일</div>
       <motion.div
-        className="flex items-center"
+        className="flex items-center w-full"
         animate={onShake ? { x: [-10, 10, -10, 10, 0] } : {}}
         transition={{ duration: 0.5 }}
       >
@@ -57,7 +57,7 @@ function EmailInput({
           type="text"
           value={emailId}
           onChange={handleEmailIdChange}
-          className="w-2/5 p-2 border-b-2 border-[#A5A5A5] border-x-0 border-t-0 outline-none focus-within:border-main transition duration-300 placeholder:font-light placeholder:text-sm"
+          className="w-[135px] pixel:w-[160px] p-2 border-b-2 border-[#A5A5A5] border-x-0 border-t-0 outline-none focus-within:border-main transition duration-300 placeholder:font-light placeholder:text-sm"
           placeholder="zerozero"
         />
         <span className="px-2">@</span>
@@ -66,14 +66,14 @@ function EmailInput({
             type="text"
             value={domain}
             onChange={handleCustomDomainChange}
-            className="w-2/5 p-2 border-b-2 border-[#A5A5A5] border-x-0 border-t-0 outline-none focus-within:border-main transition duration-300 placeholder:font-light placeholder:text-sm"
+            className="w-[135px] pixel:w-[160px] p-2 border-b-2 border-[#A5A5A5] border-x-0 border-t-0 outline-none focus-within:border-main transition duration-300 placeholder:font-light placeholder:text-sm"
             placeholder="직접 입력"
           />
         ) : (
           <select
             value={domain}
             onChange={handleDomainChange}
-            className="w-2/5 p-2 border-b-2 border-[#A5A5A5] border-x-0 border-t-0 outline-none focus-within:border-main transition duration-300"
+            className="w-[135px] pixel:w-[160px] p-2 border-b-2 border-[#A5A5A5] border-x-0 border-t-0 outline-none focus-within:border-main transition duration-300"
           >
             <option value="naver.com">naver.com</option>
             <option value="gmail.com">gmail.com</option>
