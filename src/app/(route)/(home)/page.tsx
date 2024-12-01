@@ -14,7 +14,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex w-full min-h-screen flex-col bg-white">
       <AnimatedLogo />
       <div className="w-full flex flex-col items-center">
         <button

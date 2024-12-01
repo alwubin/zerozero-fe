@@ -1,24 +1,24 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Archivo_Black } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import { Archivo_Black } from 'next/font/google';
+import './globals.css';
 
 const pretendard = localFont({
-  src: "./fonts/PretendardVariable.woff2",
-  display: "swap",
-  weight: "45 920",
-  variable: "--font-pretendard",
+  src: './fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard',
 });
 
 const archivoBlack = Archivo_Black({
-  weight: ["400"],
-  subsets: ["latin"],
-  variable: "--font-archivo-black",
+  weight: ['400'],
+  subsets: ['latin'],
+  variable: '--font-archivo-black',
 });
 
 export const metadata: Metadata = {
-  title: "zerozero",
-  description: "",
+  title: 'zerozero',
+  description: '',
 };
 
 export default function RootLayout({
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`bg-[#212121] ${archivoBlack.variable}`}>
       <body
-        className={`${pretendard.className} h-screen mobile:mx-auto mobile:max-w-[480px]`}
+        className={`${pretendard.className} mx-auto h-screen w-full max-w-[430px] `}
       >
         {children}
       </body>

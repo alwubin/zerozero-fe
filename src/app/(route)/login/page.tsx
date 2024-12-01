@@ -45,7 +45,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex h-screen w-full flex-col bg-white">
       <BackButton />
       <HeaderMessage message="이메일과 비밀번호로 로그인해주세요" />
       <EmailInput setEmail={setEmail} onShake={emailShake} />

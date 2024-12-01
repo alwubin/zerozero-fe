@@ -18,6 +18,9 @@ const config: Config = {
         'tablet': '768px',
         'laptop': '1024px',
         'desktop': '1280px',
+        'pro': '390px',
+        'pixel': '412px',
+        'promax': '430px',
       },
       colors: {
         'main': '#CD5C5C',

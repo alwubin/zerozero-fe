@@ -139,7 +139,7 @@ export default function Signup() {
   }, [resetState]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex flex-col min-h-screen w-full bg-white overflow-hidden">
       <BackButton />
       <HeaderMessage message={getHeaderMessage()} />
       {step >= 1 && <NicknameInput onShake={nicknameShake} />}

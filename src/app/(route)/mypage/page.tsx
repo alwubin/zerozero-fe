@@ -49,7 +49,7 @@ export default function Mypage() {
 
       <div className="mt-auto">
         <button
-          className="bg-main w-11/12 mb-24 font-semibold text-white text-sm mx-5 py-4 rounded-3xl"
+          className="bg-main w-11/12 mb-24 font-semibold text-white text-sm mx-5 py-4 rounded-2xl"
           onClick={() => logout()}
         >
           로그아웃
