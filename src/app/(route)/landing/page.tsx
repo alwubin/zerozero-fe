@@ -58,16 +58,27 @@ export default function Main() {
 
   const [state, setState] = useState<State>({
     center: {
-      lat: localStorage.getItem(latitude)
-        ? Number(localStorage.getItem(latitude))
-        : 37.5666805,
-      lng: localStorage.getItem(longitude)
-        ? Number(localStorage.getItem(longitude))
-        : 126.9784147,
+      lat: 37.5666805,
+      lng: 126.9784147,
     },
     errMsg: null,
     isLoading: true,
   });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedLat = localStorage.getItem('latitude');
+      const savedLng = localStorage.getItem('longitude');
+
+      setState((prev) => ({
+        ...prev,
+        center: {
+          lat: savedLat ? Number(savedLat) : prev.center.lat,
+          lng: savedLng ? Number(savedLng) : prev.center.lng,
+        },
+      }));
+    }
+  }, []);
 
   useEffect(() => {
     if (navigator.geolocation) {
