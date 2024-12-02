@@ -1,5 +1,6 @@
+'use client';
+
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { SearchResult } from '@/app/_components/report/SearchBar';
 
 interface SearchStoreState {
