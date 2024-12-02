@@ -30,7 +30,7 @@ interface SelectStoreState {
   setLatitude: (latitude: string) => void;
   setImageFiles: (imageFiles: File[]) => void;
   setStatus: (status: boolean) => void;
-  resetSelectStore: () => void;  
+  resetSelectStore: () => void;
 }
 
 export const useSearchStore = create<SearchStoreState>((set) => ({
@@ -38,10 +38,11 @@ export const useSearchStore = create<SearchStoreState>((set) => ({
   query: '',
   setSearchResults: (results) => set({ searchResults: results }),
   setQuery: (query) => set({ query }),
-  resetSearchStore: () => set({ searchResults: [], query: '' }),  
+  resetSearchStore: () => set({ searchResults: [], query: '' }),
 }));
 
 const getFromLocalStorage = (key: string, defaultValue: any) => {
+  if (typeof window === 'undefined') return defaultValue; 
   const value = localStorage.getItem(key);
   return value ? JSON.parse(value) : defaultValue;
 };
@@ -58,39 +59,57 @@ export const useSelectStore = create<SelectStoreState>((set) => ({
   imageFiles: getFromLocalStorage('imageFiles', []),
   setId: (id) => {
     set({ id });
-    localStorage.setItem('id', JSON.stringify(id));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('id', JSON.stringify(id));
+    }
   },
   setPlaceName: (placeName) => {
     set({ placeName });
-    localStorage.setItem('placeName', JSON.stringify(placeName));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('placeName', JSON.stringify(placeName));
+    }
   },
   setPhone: (phone) => {
     set({ phone });
-    localStorage.setItem('phone', JSON.stringify(phone));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('phone', JSON.stringify(phone));
+    }
   },
   setCategory: (category) => {
     set({ category });
-    localStorage.setItem('category', JSON.stringify(category));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('category', JSON.stringify(category));
+    }
   },
   setAddress: (address) => {
     set({ address });
-    localStorage.setItem('address', JSON.stringify(address));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('address', JSON.stringify(address));
+    }
   },
   setLongitude: (longitude) => {
     set({ longitude });
-    localStorage.setItem('longitude', JSON.stringify(longitude));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('longitude', JSON.stringify(longitude));
+    }
   },
   setLatitude: (latitude) => {
     set({ latitude });
-    localStorage.setItem('latitude', JSON.stringify(latitude));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('latitude', JSON.stringify(latitude));
+    }
   },
   setStatus: (status) => {
     set({ status });
-    localStorage.setItem('status', JSON.stringify(status));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('status', JSON.stringify(status));
+    }
   },
   setImageFiles: (imageFiles) => {
     set({ imageFiles });
-    localStorage.setItem('imageFiles', JSON.stringify(imageFiles.map(file => file.name))); // Storing only file names, you may need to adjust based on your requirements
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('imageFiles', JSON.stringify(imageFiles.map(file => file.name)));
+    }
   },
   resetSelectStore: () => {
     set({
@@ -104,14 +123,16 @@ export const useSelectStore = create<SelectStoreState>((set) => ({
       status: false,
       imageFiles: [],
     });
-    localStorage.removeItem('id');
-    localStorage.removeItem('placeName');
-    localStorage.removeItem('phone');
-    localStorage.removeItem('category');
-    localStorage.removeItem('address');
-    localStorage.removeItem('longitude');
-    localStorage.removeItem('latitude');
-    localStorage.removeItem('status');
-    localStorage.removeItem('imageFiles');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('id');
+      localStorage.removeItem('placeName');
+      localStorage.removeItem('phone');
+      localStorage.removeItem('category');
+      localStorage.removeItem('address');
+      localStorage.removeItem('longitude');
+      localStorage.removeItem('latitude');
+      localStorage.removeItem('status');
+      localStorage.removeItem('imageFiles');
+    }
   },
 }));

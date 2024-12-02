@@ -1,7 +1,6 @@
-"use client";
+'use client';
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
 interface Image {
   url: string;
@@ -21,7 +20,6 @@ interface Review {
   userId: string;
   createdAt: string;
 }
-
 
 interface ReviewData {
   review: Review;
@@ -47,26 +45,33 @@ interface SelectedStoreState {
   setZeroDrinks: (zeroDrinks: ZeroDrink[][]) => void;
   resetSelectedStore: () => void; 
 }
-  
+
 export const useSelectedStore = create<SelectedStoreState>((set) => ({
-  storeId: localStorage.getItem('storeId') || '',
-  filter: 'RECENT',  
+  storeId: typeof window !== 'undefined' ? localStorage.getItem('storeId') || '' : '', // 서버 환경 체크
+  filter: 'RECENT',
   images: [],
   reviews: [],
   zeroDrinks: [[]],
   setStoreId: (storeId) => {
     set({ storeId });
-    localStorage.setItem('storeId', storeId); 
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('storeId', storeId);
+    }
   },
-  setFilter: (filter) => set({ filter }), 
+  setFilter: (filter) => set({ filter }),
   setImages: (images) => set({ images }),
   setReviews: (reviews) => set({ reviews }),
   setZeroDrinks: (zeroDrinks) => set({ zeroDrinks }),
-  resetSelectedStore: () =>
+  resetSelectedStore: () => {
     set({
-      filter: 'RECENT',  
+      storeId: '',
+      filter: 'RECENT',
       images: [],
       reviews: [],
       zeroDrinks: [[]],
-    }),
+    });
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('storeId');
+    }
+  },
 }));
