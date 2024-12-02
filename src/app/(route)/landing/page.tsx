@@ -81,7 +81,7 @@ export default function Main() {
   }, []);
 
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (typeof window !== 'undefined' && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
