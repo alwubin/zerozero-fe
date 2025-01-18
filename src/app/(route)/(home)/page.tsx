@@ -2,6 +2,7 @@
 import { KakaoLogo } from '@/app/assets';
 import AnimatedLogo from '../../_components/home/AnimatedLogo';
 import { useRouter } from 'next/navigation';
+import { SocialLoginButton } from '@/app/_components/common/SocialLoginButton';
 
 export default function Home() {
   const router = useRouter();
@@ -18,15 +19,11 @@ export default function Home() {
     <div className="flex w-full min-h-screen flex-col bg-white">
       <AnimatedLogo />
       <div className="w-full flex flex-col items-center space-y-3 mb-10">
-        <button
-          className="flex items-center cursor-pointer justify-center rounded-md bg-[#fee500] p-4 space-x-7 w-[90%] "
+        <SocialLoginButton
+          icon={<KakaoLogo />}
+          text="카카오로 3초만에 시작하기"
           onClick={handleLogin}
-        >
-          <KakaoLogo />
-          <span className="text-black font-semibold text-base">
-            카카오로 3초만에 시작하기
-          </span>
-        </button>
+        />
         <button
           className="w-[90%] p-4 bg-main text-white rounded-lg cursor-pointer font-semibold"
           onClick={handleSignup}
