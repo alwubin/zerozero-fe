@@ -6,6 +6,7 @@ export { default as EditIcon } from './svgs/edit-icon.svg';
 export { default as UserIcon } from './svgs/user-icon.svg';
 export { default as SearchIcon } from './svgs/search-icon.svg';
 export { default as RefreshButton } from './svgs/refresh-button.svg';
+export { default as KakaoLogo } from './svgs/kakao-logo.svg';
 
 // footer icons
 export { default as HomeIconActive } from './svgs/home-icon-active.svg';

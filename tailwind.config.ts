@@ -25,7 +25,8 @@ const config: Config = {
       colors: {
         'main': '#CD5C5C',
         'nav': '#FDFDFD',
-        'point': '#F2F4F6'
+        'point': '#F2F4F6',
+        'kakao': '#fee500',
       },
       fontFamily: {
         'archivo-black': ['var(--font-archivo-black)'],
