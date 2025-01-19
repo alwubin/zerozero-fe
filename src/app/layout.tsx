@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { Archivo_Black } from 'next/font/google';
 import './globals.css';
+import { META } from '@/app/constants/metadata';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',
@@ -17,8 +18,19 @@ const archivoBlack = Archivo_Black({
 });
 
 export const metadata: Metadata = {
-  title: 'zerozero',
-  description: '',
+  title: META.title,
+  description: META.description,
+  keywords: [...META.keyword],
+  openGraph: {
+    title: META.title,
+    description: META.description,
+    locale: 'ko_KR',
+    type: 'website',
+    url: META.url,
+    images: {
+      url: `${META.url}${META.ogImage}`,
+    },
+  },
 };
 
 export default function RootLayout({
