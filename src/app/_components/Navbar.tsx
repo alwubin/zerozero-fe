@@ -30,12 +30,6 @@ export const Navbar = () => {
         isActive ? <ReportIconActive /> : <ReportIcon />,
     },
     {
-      href: '/chat',
-      label: '채팅',
-      icon: (isActive: boolean) =>
-        isActive ? <ChatIconActive /> : <ChatIcon />,
-    },
-    {
       href: '/mypage',
       label: '마이페이지',
       icon: (isActive: boolean) =>
