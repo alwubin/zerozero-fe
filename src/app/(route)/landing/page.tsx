@@ -7,6 +7,7 @@ import { useLandingStore } from '@/app/zustand/landingStore';
 import { SearchBar } from '@/app/_components/landing/SearchBar';
 import { KakaoMap } from '@/app/_components/landing/KakaoMap';
 import { StoreCarousel } from '@/app/_components/landing/StoreCarousel';
+import { RefreshButton } from '@/app/_components/common/RefreshButton';
 
 interface State {
   center: { lat: number; lng: number };
@@ -43,6 +44,7 @@ export default function Main() {
   const handleQuery = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   const fetchStoreList = async () => {
     const storeList = await searchStore(query, longitude, latitude);
@@ -146,7 +148,14 @@ export default function Main() {
         />
       )}
 
-      <div className="mt-auto">
+      <div className="mt-auto w-full max-w-[430px]">
+        <div
+          className={`${
+            isMobile ? 'left-4' : 'left-[37%]'
+          } fixed bottom-20 z-20`}
+        >
+          <RefreshButton />
+        </div>
         <Navbar />
       </div>
     </div>
