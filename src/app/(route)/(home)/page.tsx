@@ -11,6 +11,10 @@ export default function Home() {
     router.push('/login');
   };
 
+  const handleSocialLogin = () => {
+    window.location.href = process.env.NEXT_PUBLIC_KAKAO_AUTH_URL || '/login';
+  };
+
   const handleSignup = () => {
     router.push('/signup');
   };
@@ -22,7 +26,7 @@ export default function Home() {
         <SocialLoginButton
           icon={<KakaoLogo />}
           text="카카오로 3초만에 시작하기"
-          onClick={handleLogin}
+          onClick={handleSocialLogin}
         />
         <button
           className="w-[90%] p-4 bg-main text-white rounded-lg cursor-pointer font-semibold"

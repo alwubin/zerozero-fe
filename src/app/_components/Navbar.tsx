@@ -45,7 +45,9 @@ export const Navbar = () => {
             <Link
               key={item.href}
               href={item.href}
-              className="flex flex-col items-center"
+              className={`flex flex-col items-center ${
+                item.href === '/report' ? 'pl-5' : 'pl-1'
+              }`}
             >
               {item.icon(pathname === item.href)}
               <span

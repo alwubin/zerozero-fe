@@ -2,9 +2,9 @@ import { axiosInstance } from "./interceptor"
 
 interface SignupProps {
     nickname: string;
-    email: string;
-    password: string;
-  }
+    email?: string;
+    password?: string;
+}
 
 export const checkEmailDuplicate = async (email: string): Promise<boolean> => {
     try {

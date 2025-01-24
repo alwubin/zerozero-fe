@@ -1,15 +1,14 @@
 'use client';
 import React, { ChangeEvent } from 'react';
 import { motion } from 'framer-motion';
-import { useSignupStore } from '@/app/zustand/signupStore';
 
 interface NicknameInputProps {
+  nickname: string;
+  setNickname: (value: string) => void;
   onShake: boolean;
 }
 
-function NicknameInput({ onShake }: NicknameInputProps) {
-  const { nickname, setNickname } = useSignupStore();
-
+function NicknameInput({ nickname, setNickname, onShake }: NicknameInputProps) {
   const handleNickname = (e: ChangeEvent<HTMLInputElement>) =>
     setNickname(e.target.value);
 

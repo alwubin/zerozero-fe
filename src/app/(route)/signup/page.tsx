@@ -142,7 +142,13 @@ export default function Signup() {
     <div className="flex flex-col min-h-screen w-full bg-white overflow-hidden">
       <BackButton />
       <HeaderMessage message={getHeaderMessage()} />
-      {step >= 1 && <NicknameInput onShake={nicknameShake} />}
+      {step >= 1 && (
+        <NicknameInput
+          nickname={nickname}
+          setNickname={setNickname}
+          onShake={nicknameShake}
+        />
+      )}
       {step >= 2 && (
         <>
           <EmailInput
