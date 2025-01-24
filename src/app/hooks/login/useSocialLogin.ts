@@ -36,11 +36,15 @@ interface UseSocialLoginProps {
           setCookie(null, 'accessToken', accessToken, {
             maxAge: 30 * 24 * 60 * 60, 
             path: '/',
+            httpOnly: true,
+            secure: true
           });
       
           setCookie(null, 'refreshToken', refreshToken, {
             maxAge: 30 * 24 * 60 * 60, 
             path: '/',
+            httpOnly: true,
+            secure: true
           });
 
           switch (user.status) {

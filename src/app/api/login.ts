@@ -20,15 +20,18 @@ export const postLogin = async (values: LoginProps, ctx?: GetServerSidePropsCont
 
     const { accessToken, refreshToken } = data.token;
 
-    // nookies를 사용하여 쿠키에 토큰을 저장합니다.
     setCookie(ctx, 'accessToken', accessToken, {
-      maxAge: 30 * 24 * 60 * 60, // 30일
+      maxAge: 30 * 24 * 60 * 60, 
       path: '/',
+      httpOnly: true,
+      secure: true
     });
 
     setCookie(ctx, 'refreshToken', refreshToken, {
-      maxAge: 30 * 24 * 60 * 60, // 30일
+      maxAge: 30 * 24 * 60 * 60, 
       path: '/',
+      httpOnly: true,
+      secure: true
     });
 
     return true;
