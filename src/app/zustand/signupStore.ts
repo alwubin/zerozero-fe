@@ -3,8 +3,8 @@ import { create } from 'zustand'
 interface SignupState {
     step: number;
     nickname: string;
-    email: string;
-    password: string;
+    email?: string;
+    password?: string;
     confirmPassword: string,
     setStep: (step: number) => void;
     setNickname: (nickname: string) => void;
