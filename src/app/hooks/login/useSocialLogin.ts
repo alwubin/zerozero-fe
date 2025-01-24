@@ -2,13 +2,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { axiosInstance } from '@/app/api/interceptor';
+import { setCookie } from 'nookies';
 
 interface UseSocialLoginProps {
-    provider?: 'kakao' | 'google' | 'naver';
+    provider: 'kakao' | 'google' | 'naver';
   }
 
 
-const useSocialLogin = ({ provider = 'kakao' }:UseSocialLoginProps) => {
+  export default function useSocialLogin ({ provider }:UseSocialLoginProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -30,18 +31,30 @@ const useSocialLogin = ({ provider = 'kakao' }:UseSocialLoginProps) => {
         const { success, user, token } = res.data;
 
         if (success) {
-            switch (user.status) {
-                case 'COMPLETED':
-                    router.replace('/landing');
-                    break;
-        
-                case 'PENDING':
-                    router.replace('/signup/social');
-                    break;
-                default:
-                    router.replace('/');
-                    break;
-            }
+          const { accessToken, refreshToken } = token;
+          
+          setCookie(null, 'accessToken', accessToken, {
+            maxAge: 30 * 24 * 60 * 60, 
+            path: '/',
+          });
+      
+          setCookie(null, 'refreshToken', refreshToken, {
+            maxAge: 30 * 24 * 60 * 60, 
+            path: '/',
+          });
+
+          switch (user.status) {
+            case 'COMPLETED':
+                router.replace('/landing');
+                break;
+    
+            case 'PENDING':
+                router.replace('/signup/onboarding');
+                break;
+            default:
+                router.replace('/');
+                break;
+          }
         }
       } catch (err) {
         console.error(err);
@@ -55,5 +68,3 @@ const useSocialLogin = ({ provider = 'kakao' }:UseSocialLoginProps) => {
 
   return { isLoading };
 };
-
-export default useSocialLogin;
