@@ -1,7 +1,6 @@
 'use client';
-import { useSelectedStore } from '@/app/zustand/detailStore';
 import Image from 'next/image';
-import { UserReview } from './UserReivew';
+import { UserReview, UserReviewProps } from './UserReivew';
 import ReviewModal from './ReviewModal';
 import {
   FirstIcon,
@@ -14,19 +13,16 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { getStoreInfo } from '@/app/api/detail';
 
-export const StoreReview = () => {
-  const {
-    reviews,
-    zeroDrinks,
-    filter,
-    setFilter,
-    storeId,
-    setStoreId,
-    setImages,
-    setReviews,
-    setZeroDrinks,
-  } = useSelectedStore();
+interface StoreReviewProps {
+  storeId: string;
+}
+
+export const StoreReview = ({ storeId }: StoreReviewProps) => {
+  const [reviews, setReviews] = useState<UserReviewProps[]>([]);
+  const [zeroDrinks, setZeroDrinks] = useState<string[][]>([[], [], []]);
+  const [filter, setFilter] = useState<'RECENT' | 'RECOMMEND'>('RECENT');
   const [isOpen, setIsOpen] = useState(false);
+
   const maxRank = 3;
 
   const handleModal = () => {
@@ -37,28 +33,24 @@ export const StoreReview = () => {
     setFilter(sortType);
   };
 
-  const fetchStoreInfo = useCallback(
-    async (storeId: string, filter: 'RECENT' | 'RECOMMEND') => {
-      try {
-        const storeInfo = await getStoreInfo(storeId, filter);
-        if (storeInfo) {
-          setStoreId(storeInfo.store.id || '');
-          setImages(storeInfo.store.images || []);
-          setReviews(storeInfo.reviews || []);
-          setZeroDrinks(storeInfo.zeroDrinks || [[]]);
-        }
-      } catch (error) {
-        console.error('판매점 조회 오류', error);
+  const fetchStoreInfo = useCallback(async () => {
+    try {
+      const storeInfo = await getStoreInfo(storeId, filter);
+      if (storeInfo) {
+        console.log(storeInfo);
+        setReviews(storeInfo.reviews || []);
+        setZeroDrinks(storeInfo.zeroDrinks || [[], [], []]);
       }
-    },
-    [setStoreId, setImages, setReviews, setZeroDrinks],
-  );
+    } catch (error) {
+      console.error('판매점 리뷰 조회 오류', error);
+    }
+  }, [storeId, filter]);
 
   useEffect(() => {
     if (storeId) {
-      fetchStoreInfo(storeId, filter);
+      fetchStoreInfo();
     }
-  }, [filter, storeId, fetchStoreInfo]);
+  }, [storeId, filter, fetchStoreInfo]);
 
   return (
     <div className="w-10/12 bg-white p-6 rounded-2xl mt-7 ml-10 h-96 overflow-scroll mb-7">
@@ -66,7 +58,7 @@ export const StoreReview = () => {
         <div className="font-semibold text-sm text-left">가게 리뷰</div>
         <div
           className="font-semibold text-xs text-main cursor-pointer"
-          onClick={() => handleModal()}
+          onClick={handleModal}
         >
           리뷰 쓰기
         </div>
@@ -99,7 +91,7 @@ export const StoreReview = () => {
         ))}
       </div>
       <div className="flex items-center justify-end mt-4 mr-2 space-x-[2px] text-[10px]">
-        {reviews.length > 0 ? (
+        {reviews.length > 0 && (
           <>
             <button
               onClick={() => handleSort('RECENT')}
@@ -123,7 +115,7 @@ export const StoreReview = () => {
               추천순
             </button>
           </>
-        ) : null}
+        )}
       </div>
 
       <div className="mt-2 space-y-4">
