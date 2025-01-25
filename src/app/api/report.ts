@@ -41,7 +41,7 @@ export const registerStore = async (placeName: string, longitude: string, latitu
 
         if (data.success) {
             console.log('가게 등록 성공:', data);
-            return data;
+            return data.storeId;
         } else {
             console.error('가게 등록 실패:', data.message);
             return null;
