@@ -23,7 +23,7 @@ export const StoreInfo = ({
   const displayCategory = category || selectStore.category;
 
   return (
-    <div className="w-10/12 bg-white p-6 rounded-2xl space-y-4 mt-8 ml-10">
+    <div className="w-10/12 bg-white py-4 px-5 rounded-2xl space-y-4 mt-8 ml-10">
       <div className="font-bold text-2xl">{displayPlaceName}</div>
       <div className="flex flex-row font-extralight text-sm">
         <Marker className="mr-2" />

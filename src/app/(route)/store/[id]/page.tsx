@@ -73,7 +73,7 @@ export default function RegisteredStore() {
         address={storeInfo?.address}
         category={storeInfo?.category}
       />
-      <div>
+      <div className="flex flex-col space-y-3 mt-3">
         <RegisteredStoreImage images={storeInfo?.images} />
         <StoreReview storeId={storeId} />
       </div>

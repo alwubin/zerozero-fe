@@ -53,7 +53,7 @@ export const StoreReview = ({ storeId }: StoreReviewProps) => {
   }, [storeId, filter, fetchStoreInfo]);
 
   return (
-    <div className="w-10/12 bg-white p-6 rounded-2xl mt-7 ml-10 h-96 overflow-scroll mb-7">
+    <div className="w-10/12 bg-white py-4 px-5 rounded-2xl ml-10 h-96 overflow-scroll mb-7">
       <div className="flex justify-between items-center mb-5">
         <div className="font-semibold text-sm text-left">가게 리뷰</div>
         <div
