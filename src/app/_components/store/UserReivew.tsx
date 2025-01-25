@@ -12,7 +12,7 @@ interface ReviewUser {
   };
 }
 
-interface Review {
+export interface Review {
   id: string;
   content: string;
   zeroDrinks: string[];
@@ -20,7 +20,7 @@ interface Review {
   createdAt: string;
 }
 
-interface UserReviewProps {
+export interface UserReviewProps {
   isLiked: boolean;
   likeCount: number;
   review: Review;
