@@ -2,6 +2,7 @@
 import { PlusIcon } from '@/app/assets';
 import { useSelectStore } from '@/app/zustand/reportStore';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 const StoreImage = () => {
   const { imageFiles, setImageFiles } = useSelectStore();
@@ -15,6 +16,17 @@ const StoreImage = () => {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      imageFiles.forEach((imageFile) => {
+        if (imageFile instanceof File) {
+          const objectURL = URL.createObjectURL(imageFile);
+          URL.revokeObjectURL(objectURL);
+        }
+      });
+    };
+  }, [imageFiles]);
+
   return (
     <div className="bg-white flex flex-col space-y-3 rounded-xl p-4 pb-6 mt-4">
       <div className="font-semibold text-sm text-left">가게 사진</div>
@@ -23,13 +35,14 @@ const StoreImage = () => {
           <div className="flex flex-wrap">
             {imageFiles.map((imageFile) => {
               if (!(imageFile instanceof File)) return null;
+              const objectURL = URL.createObjectURL(imageFile);
               return (
                 <div
                   key={imageFile.name}
                   className="w-16 h-16 bg-[#CBCBCB] rounded-2xl mr-2 mb-2 relative overflow-hidden"
                 >
                   <Image
-                    src={URL.createObjectURL(imageFile)}
+                    src={objectURL}
                     alt={imageFile.name}
                     layout="fill"
                     objectFit="cover"
