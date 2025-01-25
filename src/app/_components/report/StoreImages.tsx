@@ -8,7 +8,9 @@ const StoreImage = () => {
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      const newImageFiles = Array.from(event.target.files) as File[];
+      const newImageFiles = Array.from(event.target.files).filter(
+        (file) => file instanceof File,
+      ) as File[];
       setImageFiles([...imageFiles, ...newImageFiles]);
     }
   };
@@ -19,20 +21,23 @@ const StoreImage = () => {
       <div className="flex flex-row">
         {imageFiles.length > 0 && (
           <div className="flex flex-wrap">
-            {imageFiles.map((imageFile) => (
-              <div
-                key={imageFile.name}
-                className="w-16 h-16 bg-[#CBCBCB] rounded-2xl mr-2 mb-2 relative overflow-hidden"
-              >
-                <Image
-                  src={URL.createObjectURL(imageFile)}
-                  alt={imageFile.name}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-2xl"
-                />
-              </div>
-            ))}
+            {imageFiles.map((imageFile) => {
+              if (!(imageFile instanceof File)) return null;
+              return (
+                <div
+                  key={imageFile.name}
+                  className="w-16 h-16 bg-[#CBCBCB] rounded-2xl mr-2 mb-2 relative overflow-hidden"
+                >
+                  <Image
+                    src={URL.createObjectURL(imageFile)}
+                    alt={imageFile.name}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-2xl"
+                  />
+                </div>
+              );
+            })}
           </div>
         )}
         <div className="cursor-pointer w-16 h-16 bg-[#CBCBCB] rounded-2xl flex items-center justify-center">
