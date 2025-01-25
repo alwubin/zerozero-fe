@@ -26,7 +26,7 @@ export const ReportButton: React.FC = () => {
         resetSearchStore();
         resetSelectStore();
         resetLanding();
-        router.push('/landing');
+        router.push(`/store/${response}`);
       } else {
         alert('다시 시도해주세요.');
       }

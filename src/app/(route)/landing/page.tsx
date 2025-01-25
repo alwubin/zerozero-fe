@@ -44,7 +44,6 @@ export default function Main() {
   const handleQuery = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   const fetchStoreList = async () => {
     const storeList = await searchStore(query, longitude, latitude);
@@ -148,12 +147,8 @@ export default function Main() {
         />
       )}
 
-      <div className="mt-auto w-full max-w-[430px]">
-        <div
-          className={`${
-            isMobile ? 'left-4' : 'left-[37%]'
-          } fixed bottom-20 z-20`}
-        >
+      <div className="relative w-full max-w-[430px] mx-auto">
+        <div className="fixed bottom-20 left-1/2 transform -translate-x-[calc(430px/2)] px-4 z-20">
           <RefreshButton />
         </div>
         <Navbar />
