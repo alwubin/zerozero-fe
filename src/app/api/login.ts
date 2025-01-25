@@ -23,15 +23,11 @@ export const postLogin = async (values: LoginProps, ctx?: GetServerSidePropsCont
     setCookie(ctx, 'accessToken', accessToken, {
       maxAge: 30 * 24 * 60 * 60, 
       path: '/',
-      httpOnly: true,
-      secure: true
     });
 
     setCookie(ctx, 'refreshToken', refreshToken, {
       maxAge: 30 * 24 * 60 * 60, 
       path: '/',
-      httpOnly: true,
-      secure: true
     });
 
     return true;
