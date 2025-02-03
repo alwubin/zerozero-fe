@@ -11,8 +11,8 @@ export const ImagePreview = ({ imgUrl }: ImagePreviewProps) => {
       className="relative rounded-md border-[1px] border-gray-200"
       src={imgUrl}
       alt={imgUrl}
-      width={16}
-      height={16}
+      width={64}
+      height={64}
     />
   );
 };
