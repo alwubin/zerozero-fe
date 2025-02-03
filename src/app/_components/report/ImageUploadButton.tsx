@@ -4,19 +4,19 @@ import React, { useRef } from 'react';
 export interface ImageUploadButtonProps {
   imageTotalCount?: number;
   imageCount: number;
-  onUploadFiles: () => void;
+  isFull: boolean;
+  onUpload: (image: string) => void;
 }
 
 export const ImageUploadButton = ({
   imageTotalCount = 3,
   imageCount,
-  onUploadFiles,
+  isFull,
+  onUpload,
 }: ImageUploadButtonProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
 
     if (files) {
@@ -24,12 +24,20 @@ export const ImageUploadButton = ({
       const remainingCount = imageTotalCount - imageCount;
       const limitedNewFiles = newImageFiles.slice(0, remainingCount);
 
-      await onUploadFiles();
+      limitedNewFiles.forEach((file) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          if (reader.result) {
+            onUpload(reader.result as string);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
     }
   };
 
   const handleButtonClick = () => {
-    if (imageCount >= imageTotalCount) return;
+    if (isFull) return;
     fileInputRef.current?.click();
   };
 
@@ -38,7 +46,7 @@ export const ImageUploadButton = ({
       type="button"
       onClick={handleButtonClick}
       className="cursor-pointer rounded-md border-[1px] border-gray-200 bg-white w-16 h-16"
-      disabled={imageCount >= imageTotalCount}
+      disabled={isFull}
     >
       <div className="flex flex-col items-center space-y-[3px]">
         <Camera />

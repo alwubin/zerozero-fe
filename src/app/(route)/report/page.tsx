@@ -1,17 +1,15 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { Navbar } from '@/app/_components/Navbar';
 import { SearchBar } from '@/app/_components/report/SearchBar';
 import { SearchResults } from '@/app/_components/report/SearchResults';
 import { ReportButton } from '@/app/_components/report/ReportButton';
 import { StoreAddress } from '@/app/_components/report/StoreAddress';
-import StoreImage from '@/app/_components/report/StoreImages';
-import { useSearchStore } from '@/app/zustand/reportStore';
 import ImageUploader from '@/app/_components/report/ImageUploader';
+import { useSearchStore } from '@/app/zustand/reportStore';
 
 export default function Report() {
   const { searchResults } = useSearchStore();
-  const [reportImage, setReportImage] = useState<string[]>([]);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F2F4F6] w-full">
@@ -24,7 +22,7 @@ export default function Report() {
           </div>
         )}
         <StoreAddress />
-        <ImageUploader images={reportImage} setImages={setReportImage} />
+        <ImageUploader />
         <ReportButton />
       </div>
 
