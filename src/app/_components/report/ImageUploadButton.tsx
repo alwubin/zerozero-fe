@@ -5,7 +5,7 @@ export interface ImageUploadButtonProps {
   imageTotalCount?: number;
   imageCount: number;
   isFull: boolean;
-  onUpload: (image: string) => void;
+  onUpload: (image: File) => void;
 }
 
 export const ImageUploadButton = ({
@@ -25,13 +25,7 @@ export const ImageUploadButton = ({
       const limitedNewFiles = newImageFiles.slice(0, remainingCount);
 
       limitedNewFiles.forEach((file) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          if (reader.result) {
-            onUpload(reader.result as string);
-          }
-        };
-        reader.readAsDataURL(file);
+        onUpload(file);
       });
     }
   };
