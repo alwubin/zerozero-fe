@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DetailHeader } from '@/app/_components/store/DetailHeader';
 import { StoreInfo } from '@/app/_components/store/StoreInfo';
 import StoreImage from '@/app/_components/report/StoreImages';
@@ -8,10 +8,12 @@ import { ReportButton } from '@/app/_components/report/ReportButton';
 import { useSelectedStore } from '@/app/zustand/detailStore';
 import { useSelectStore } from '@/app/zustand/reportStore';
 import { getStoreInfo } from '@/app/api/detail';
+import ImageUploader from '@/app/_components/report/ImageUploader';
 
 export default function Detail() {
   const { status, id } = useSelectStore();
   const { setImages, setReviews, setZeroDrinks, filter } = useSelectedStore();
+  const [reportImage, setReportImage] = useState<string[]>([]);
 
   const fetchStoreInfo = async () => {
     try {
@@ -38,7 +40,7 @@ export default function Detail() {
       <DetailHeader />
       <StoreInfo />
       <div className="w-10/12 mt-3 ml-10 space-y-7">
-        <StoreImage />
+        <ImageUploader images={reportImage} setImages={setReportImage} />
         <ReportButton />
       </div>
     </div>
