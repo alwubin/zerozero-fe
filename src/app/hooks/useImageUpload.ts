@@ -14,7 +14,7 @@ export const useImageUpload = (prefix: string, maxImages: number = 3) => {
       });
 
       return {
-        presignedUrl: data.presignedUrl,
+        presignedUrl: data.preSignedUrl,
         objectUrl: data.objectUrl,
       };
     } catch (error) {
