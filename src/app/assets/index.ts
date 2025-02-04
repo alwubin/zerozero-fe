@@ -41,3 +41,4 @@ export { default as PlusIcon } from './svgs/plus-icon.svg';
 export { default as Marker } from './svgs/marker.svg';
 export { default as Phone } from './svgs/phone.svg';
 export { default as Category } from './svgs/category.svg';
+export { default as Camera } from './svgs/camera.svg';
