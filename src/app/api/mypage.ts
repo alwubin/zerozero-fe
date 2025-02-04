@@ -4,11 +4,9 @@ interface UserProfileResponse {
     success: boolean;
     userProfile: {
         nickname: string;
-        profileImage: {
-            url: string | null;
-        };
-        rank: number | null; // 없을 시 null
-        storeReportCount: number; // 기본값 0
+        profileImage: string;
+        rank: number | null; 
+        storeReportCount: number; 
     };
 }
 
@@ -29,25 +27,14 @@ export const getUserProfile = async (): Promise<UserProfileResponse['userProfile
 }
 
   
-export const updateProfile = async (nickname: string, imageFile: File | null | undefined) => {
+export const updateProfile = async (nickname: string, imageUrl: string | null) => {
   try {
-    const formData = new FormData();
-    if (imageFile) {
-      formData.append('imageFile', imageFile);
-    } else {
-      formData.append('imageFile', '');
-    }
-
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      params: {
-        nickname: nickname
-      }
+    const payload = {
+      nickname,
+      image: imageUrl || "", 
     };
 
-    const response = await axiosInstance.patch('/user', formData, config);
+    const response = await axiosInstance.patch('/user', payload);
     return response.data;
   } catch (error) {
     console.error('프로필 업데이트 중 오류 발생:', error);

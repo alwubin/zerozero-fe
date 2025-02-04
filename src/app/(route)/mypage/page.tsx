@@ -8,7 +8,7 @@ import { logout } from '@/app/api/login';
 
 interface UserProfileState {
   nickname: string;
-  profileImage: { url: string | null };
+  profileImage: string;
   rank: number | null;
   storeReportCount: number;
 }
@@ -16,7 +16,7 @@ interface UserProfileState {
 export default function Mypage() {
   const [userProfile, setUserProfile] = useState<UserProfileState>({
     nickname: '',
-    profileImage: { url: null },
+    profileImage: '',
     rank: null,
     storeReportCount: 0,
   });
@@ -27,7 +27,7 @@ export default function Mypage() {
       if (profile) {
         setUserProfile({
           ...profile,
-          profileImage: profile.profileImage || { url: null },
+          profileImage: profile.profileImage || '',
         });
       }
     };
@@ -47,13 +47,14 @@ export default function Mypage() {
         storeReportCount={userProfile.storeReportCount}
       />
 
+      <button
+        className="bg-main w-11/12 mb-24 font-semibold text-white text-sm mx-5 py-4 rounded-2xl"
+        onClick={() => logout()}
+      >
+        로그아웃
+      </button>
+
       <div className="mt-auto">
-        <button
-          className="bg-main w-11/12 mb-24 font-semibold text-white text-sm mx-5 py-4 rounded-2xl"
-          onClick={() => logout()}
-        >
-          로그아웃
-        </button>
         <Navbar />
       </div>
     </div>
