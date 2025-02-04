@@ -21,21 +21,19 @@ export const searchStore = async (query: string) => {
     }
 }
 
-export const registerStore = async (placeName: string, longitude: string, latitude: string, imageFiles: File[]) => {
+export const registerStore = async (placeName: string, longitude: string, latitude: string, images: string[]) => {
     try {
-        const formData = new FormData();
-        formData.append('placeName', placeName);
-        formData.append('longitude', longitude);
-        formData.append('latitude', latitude);
+        const payload = {
+            placeName,
+            longitude,
+            latitude,
+            images, 
+        };
 
-        imageFiles.forEach((file) => {
-            formData.append('imageFiles', file);
-        });
-
-        const { data } = await axiosInstance.post('/store', formData, {
+        const { data } = await axiosInstance.post('/store', payload, {
             headers: {
-                'Content-Type': 'multipart/form-data',
-                'accept': '*/*',
+                'Content-Type': 'application/json',
+                accept: '*/*',
             },
         });
 

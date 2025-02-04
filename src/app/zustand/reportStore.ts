@@ -11,27 +11,6 @@ interface SearchStoreState {
   resetSearchStore: () => void;  
 }
 
-interface SelectStoreState {
-  id: string;
-  placeName: string;
-  phone: string;
-  address: string;
-  category: string;
-  longitude: string;
-  latitude: string;
-  status: boolean;
-  imageFiles: File[];
-  setId: (id: string) => void;
-  setPlaceName: (placeName: string) => void;
-  setPhone: (phone: string) => void;
-  setCategory: (category: string) => void;
-  setAddress: (address: string) => void;
-  setLongitude: (longitude: string) => void;
-  setLatitude: (latitude: string) => void;
-  setImageFiles: (imageFiles: File[]) => void;
-  setStatus: (status: boolean) => void;
-  resetSelectStore: () => void;
-}
 
 export const useSearchStore = create<SearchStoreState>((set) => ({
   searchResults: [],
@@ -46,6 +25,27 @@ const getFromLocalStorage = (key: string, defaultValue: any) => {
   const value = localStorage.getItem(key);
   return value ? JSON.parse(value) : defaultValue;
 };
+interface SelectStoreState {
+  id: string;
+  placeName: string;
+  phone: string;
+  address: string;
+  category: string;
+  longitude: string;
+  latitude: string;
+  status: boolean;
+  images: string[]; 
+  setId: (id: string) => void;
+  setPlaceName: (placeName: string) => void;
+  setPhone: (phone: string) => void;
+  setCategory: (category: string) => void;
+  setAddress: (address: string) => void;
+  setLongitude: (longitude: string) => void;
+  setLatitude: (latitude: string) => void;
+  setImages: (images: string[]) => void; 
+  setStatus: (status: boolean) => void;
+  resetSelectStore: () => void;
+}
 
 export const useSelectStore = create<SelectStoreState>((set) => ({
   id: getFromLocalStorage('id', ''),
@@ -56,7 +56,7 @@ export const useSelectStore = create<SelectStoreState>((set) => ({
   longitude: getFromLocalStorage('longitude', ''),
   latitude: getFromLocalStorage('latitude', ''),
   status: getFromLocalStorage('status', false),
-  imageFiles: getFromLocalStorage('imageFiles', []),
+  images: getFromLocalStorage('images', []), 
   setId: (id) => {
     set({ id });
     if (typeof window !== 'undefined') {
@@ -105,10 +105,10 @@ export const useSelectStore = create<SelectStoreState>((set) => ({
       localStorage.setItem('status', JSON.stringify(status));
     }
   },
-  setImageFiles: (imageFiles) => {
-    set({ imageFiles });
+  setImages: (images) => { 
+    set({ images });
     if (typeof window !== 'undefined') {
-      localStorage.setItem('imageFiles', JSON.stringify(imageFiles.map(file => file.name)));
+      localStorage.setItem('images', JSON.stringify(images));
     }
   },
   resetSelectStore: () => {
@@ -121,7 +121,7 @@ export const useSelectStore = create<SelectStoreState>((set) => ({
       longitude: '',
       latitude: '',
       status: false,
-      imageFiles: [],
+      images: [],
     });
     if (typeof window !== 'undefined') {
       localStorage.removeItem('id');
@@ -132,7 +132,7 @@ export const useSelectStore = create<SelectStoreState>((set) => ({
       localStorage.removeItem('longitude');
       localStorage.removeItem('latitude');
       localStorage.removeItem('status');
-      localStorage.removeItem('imageFiles');
+      localStorage.removeItem('images');
     }
   },
 }));

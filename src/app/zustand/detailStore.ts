@@ -35,12 +35,12 @@ interface ZeroDrink {
 interface SelectedStoreState {
   storeId: string;
   filter: 'RECENT' | 'RECOMMEND'; 
-  images: Image[];
+  images: string[];
   reviews: ReviewData[];
   zeroDrinks: ZeroDrink[][];
   setStoreId: (storeId: string) => void;
   setFilter: (filter: 'RECENT' | 'RECOMMEND') => void; 
-  setImages: (images: Image[]) => void;
+  setImages: (images: string[]) => void;
   setReviews: (reviews: ReviewData[]) => void;
   setZeroDrinks: (zeroDrinks: ZeroDrink[][]) => void;
   resetSelectedStore: () => void; 
