@@ -4,7 +4,7 @@ import { useImageUpload } from '@/app/hooks/useImageUpload';
 import { ImagePreview } from '@/app/_components/report/ImagePreview';
 import { ImageUploadButton } from '@/app/_components/report/ImageUploadButton';
 
-export const ImageUploader: React.FC = () => {
+export const ImageUploader = () => {
   const { images, addImage, isFull, isUploading } = useImageUpload(
     'store-images',
     3,
