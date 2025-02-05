@@ -1,11 +1,17 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useImageUpload } from '@/app/hooks/useImageUpload';
 import { ImagePreview } from '@/app/_components/report/ImagePreview';
 import { ImageUploadButton } from '@/app/_components/report/ImageUploadButton';
+import { useSelectStore } from '@/app/zustand/reportStore';
 
 export const ImageUploader = () => {
   const { images, addImage, isFull, isUploading } = useImageUpload('store', 3);
+  const { setImages } = useSelectStore();
+
+  useEffect(() => {
+    setImages(images);
+  }, [images, setImages]);
 
   return (
     <div className="bg-white flex flex-col space-y-3 rounded-xl p-4 pb-6 mt-4">
