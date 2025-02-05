@@ -4,14 +4,14 @@ import { UserIcon } from '@/app/assets';
 
 interface ProfileProps {
   nickname: string;
-  profileImageUrl: { url: string | null };
+  profileImageUrl: string;
 }
 
 export const UserProfile: React.FC<ProfileProps> = ({
   nickname,
   profileImageUrl,
 }) => {
-  const imageUrl = profileImageUrl.url;
+  const imageUrl = profileImageUrl;
   const router = useRouter();
 
   const handleProfileEdit = () => {
