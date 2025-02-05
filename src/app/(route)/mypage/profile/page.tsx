@@ -28,7 +28,12 @@ export default function Profile() {
 
   const addImageFromUrl = (url: string) => {
     if (url) {
-      addImage(new File([], url));
+      try {
+        addImage(new File([], url));
+      } catch (error) {
+        console.error('이미지 URL 처리 중 오류:', error);
+        alert('이미지를 불러오는데 실패했습니다.');
+      }
     }
   };
 
