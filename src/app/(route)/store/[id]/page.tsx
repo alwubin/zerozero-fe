@@ -1,13 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React, { useEffect, useState } from 'react';
 import { DetailHeader } from '@/app/_components/store/DetailHeader';
 import { StoreInfo } from '@/app/_components/store/StoreInfo';
-import { RegisteredStoreImage } from '@/app/_components/store/RegisteredStoreImage';
 import { StoreReview } from '@/app/_components/store/StoreReview';
 import { useSelectedStore } from '@/app/zustand/detailStore';
 import { getStoreInfo } from '@/app/api/detail';
 import { useParams } from 'next/navigation';
 import Loading from '@/app/loading';
+
+import Image from 'next/image';
+import RegisteredStoreImage from '@/app/_components/store/RegisteredStoreImage';
+import Modal from '@/app/_components/common/Modal';
 
 export interface Store {
   id: string;
@@ -34,6 +38,8 @@ export default function RegisteredStore() {
   const [isLoading, setIsLoading] = useState(true);
   const [storeInfo, setStoreInfo] = useState<Store>();
   const [storeId, setStoreId] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const fetchStoreInfo = async (value: string) => {
     try {
@@ -41,10 +47,6 @@ export default function RegisteredStore() {
       console.log(storeInfo.store);
       if (storeInfo) {
         setStoreInfo(storeInfo.store);
-        // setStoreId(storeInfo.store.id || '');
-        // setImages(storeInfo.store.images || []);
-        // setReviews(storeInfo.reviews || []);
-        // setZeroDrinks(storeInfo.zeroDrinks || [[]]);
       }
     } catch (error) {
       console.error('판매점 조회 오류', error);
@@ -53,12 +55,22 @@ export default function RegisteredStore() {
     }
   };
 
+  const openImageModal = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null);
+  };
+
   useEffect(() => {
     if (params?.id) {
       fetchStoreInfo(params.id);
       setStoreId(params.id);
     }
-  }, []);
+  }, [params?.id]);
 
   if (isLoading) {
     return <Loading />;
@@ -74,9 +86,26 @@ export default function RegisteredStore() {
         category={storeInfo?.category}
       />
       <div className="flex flex-col space-y-3 mt-3">
-        <RegisteredStoreImage images={storeInfo?.images} />
+        <RegisteredStoreImage
+          images={storeInfo?.images}
+          onImageClick={openImageModal}
+        />
         <StoreReview storeId={storeId} />
       </div>
+
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        {selectedImage && (
+          <div className="relative">
+            <Image
+              src={selectedImage}
+              alt={`store-image`}
+              width={800}
+              height={600}
+              className="object-cover"
+            />
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }
