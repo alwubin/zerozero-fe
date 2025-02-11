@@ -33,24 +33,24 @@ export const StoreReview = ({ storeId }: StoreReviewProps) => {
     setFilter(sortType);
   };
 
-  const fetchStoreInfo = useCallback(async () => {
-    try {
-      const storeInfo = await getStoreInfo(storeId, filter);
-      if (storeInfo) {
-        console.log(storeInfo);
-        setReviews(storeInfo.reviews || []);
-        setZeroDrinks(storeInfo.zeroDrinks || [[], [], []]);
-      }
-    } catch (error) {
-      console.error('판매점 리뷰 조회 오류', error);
-    }
-  }, [storeId, filter]);
-
   useEffect(() => {
+    const fetchStoreInfo = async () => {
+      try {
+        const storeInfo = await getStoreInfo(storeId, filter);
+        if (storeInfo) {
+          console.log(storeInfo);
+          setReviews(storeInfo.reviews || []);
+          setZeroDrinks(storeInfo.zeroDrinks || [[], [], []]);
+        }
+      } catch (error) {
+        console.error('판매점 리뷰 조회 오류', error);
+      }
+    };
+
     if (storeId) {
       fetchStoreInfo();
     }
-  }, [storeId, filter, fetchStoreInfo]);
+  }, [storeId, filter]);
 
   return (
     <div className="w-10/12 bg-white py-4 px-5 rounded-2xl ml-10 h-96 overflow-scroll mb-7">
@@ -64,7 +64,7 @@ export const StoreReview = ({ storeId }: StoreReviewProps) => {
         </div>
       </div>
 
-      <div className="flex flex-row justify-center space-x-10">
+      <div className="flex flex-row justify-center space-x-7">
         {[...Array(maxRank)].map((_, i) => (
           <div className="flex flex-row space-x-3" key={i}>
             {zeroDrinks[i] ? (

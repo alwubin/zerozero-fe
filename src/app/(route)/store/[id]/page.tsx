@@ -85,7 +85,7 @@ export default function RegisteredStore() {
         address={storeInfo?.address}
         category={storeInfo?.category}
       />
-      <div className="flex flex-col space-y-3 mt-3">
+      <div className="flex flex-col space-y-3 my-3">
         <RegisteredStoreImage
           images={storeInfo?.images}
           onImageClick={openImageModal}

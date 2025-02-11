@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { LikeButton, LikedButton } from '@/app/assets';
 import { patchReviewLike } from '@/app/api/detail';
@@ -37,6 +37,11 @@ export const UserReview = ({
   const [likeCount, setLikeCount] = useState(initialLikeCount);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    setIsLiked(initialLiked);
+    setLikeCount(initialLikeCount);
+  }, [initialLiked, initialLikeCount]);
+
   const handleLikeClick = async () => {
     if (loading) return;
 
@@ -44,12 +49,8 @@ export const UserReview = ({
       setLoading(true);
       await patchReviewLike(review.id);
 
-      if (isLiked) {
-        setLikeCount((prev) => prev - 1);
-      } else {
-        setLikeCount((prev) => prev + 1);
-      }
       setIsLiked((prev) => !prev);
+      setLikeCount((prev) => prev + (isLiked ? -1 : 1));
     } catch (error) {
       console.error('좋아요 처리 실패:', error);
     } finally {
