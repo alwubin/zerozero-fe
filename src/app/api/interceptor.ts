@@ -1,18 +1,18 @@
 import axios from "axios";
-import { parseCookies, setCookie } from 'nookies';
+import { parseCookies, setCookie, destroyCookie } from 'nookies';
 import { logout } from "./login";
 
 export const axiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
-    timeout: 5000,
-    headers: {
-        'Content-Type': 'application/json',
-        'accept': '*/*',
-    }
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  timeout: 5000,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': '*/*',
+  }
 });
 
 axiosInstance.interceptors.request.use(
-  async (config) => {
+  (config) => {
     const cookies = parseCookies();
     const accessToken = cookies.accessToken;
     if (accessToken) {
@@ -20,25 +20,33 @@ axiosInstance.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401) {
+    const originalRequest = error.config;
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true; 
+      
       const cookies = parseCookies();
       const refreshToken = cookies.refreshToken;
 
-      if (refreshToken) {
-        try {
-          const response = await axiosInstance.post('/refresh/token', { refreshToken });
-          const { accessToken, refreshToken: newRefreshToken } = response.data;
+      if (!refreshToken) {
+        logout();
+        return Promise.reject(error);
+      }
+
+      try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/refresh/token`, { refreshToken });
+
+        if (response.data.success && response.data.token) {
+          const { accessToken, refreshToken: newRefreshToken } = response.data.token;
 
           setCookie(null, 'accessToken', accessToken, {
-            maxAge: 30 * 24 * 60 * 60, // 30일 유효
+            maxAge: 30 * 24 * 60 * 60,
             path: '/',
           });
           setCookie(null, 'refreshToken', newRefreshToken, {
@@ -46,16 +54,19 @@ axiosInstance.interceptors.response.use(
             path: '/',
           });
 
-          error.config.headers['Authorization'] = `Bearer ${accessToken}`;
-          return axiosInstance(error.config);
-        } catch (refreshError) {
-          logout();
-          return Promise.reject(refreshError);
+          originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+          return axiosInstance(originalRequest);
+        } else {
+          throw new Error('토큰 갱신 실패');
         }
-      } else {
+      } catch (refreshError) {
+        destroyCookie(null, 'accessToken');
+        destroyCookie(null, 'refreshToken');
         logout();
+        return Promise.reject(refreshError);
       }
     }
+
     return Promise.reject(error);
   }
 );
